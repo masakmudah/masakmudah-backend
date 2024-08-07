@@ -1,9 +1,15 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import { cors } from "hono/cors";
 
-const app = new Hono()
+import registerRoute from "./routes/register";
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+const app = new Hono();
 
-export default app
+app.use("*", cors());
+app.get("/", (c) => {
+	return c.json({
+		message: "Masak Mudah API",
+	});
+});
+
+app.route("/auth/register", registerRoute);
