@@ -24,7 +24,7 @@ You can also access the following:
 
 ## Database Design
 
-To view the latest database design in more detail, you can navigate to the following link: [ERD](https://dbdocs.io/nusaventure.com/nusaventure)
+To view the latest database design in more detail, you can navigate to the following link: [ERD](https://dbdocs.io/masakmudah.com/masakmudah)
 
 ![ERD](./assets/erd.svg)
 
