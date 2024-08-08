@@ -8,21 +8,57 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  username String  @unique
-  fullname String?
-  email    String  @unique
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  password  Password?
+  id           String         @id @default(cuid())
+  username     String         @unique
+  fullname     String?
+  email        String         @unique
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  password     Password?
+  savedRecipes SavedRecipes[]
+  Recipes      Recipes[]
 }
 
 model Password {
-  id String @id @default(cuid())
-
-  hash String
-
+  id     String @id @default(cuid())
+  hash   String
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique
+}
+
+model SavedRecipes {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  recipesId String
+  recipes   Recipes  @relation(fields: [recipesId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Recipes {
+  id                 String @id @default(cuid())
+  recipe             String
+  description        String
+  imageURL           String
+  slug               String
+  ingredients        String
+  cookingIntructions String
+
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  SavedRecipes SavedRecipes[]
+  Categories   Categories[]
+}
+
+model Categories {
+  id        String   @id @default(cuid())
+  name      String
+  recipeId  String
+  recipes   Recipes  @relation(fields: [recipeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
