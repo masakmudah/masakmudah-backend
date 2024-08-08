@@ -32,6 +32,9 @@ app.get("/:username", async (c) => {
 			select: {
 				id: true,
 				username: true,
+				fullname: true,
+				email: true,
+				updatedAt: true,
 			},
 		});
 		if (!user) {
