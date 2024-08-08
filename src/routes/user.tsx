@@ -56,35 +56,4 @@ app.get("/:username", async (c) => {
 	}
 });
 
-app.delete("/:username", async (c) => {
-	const id = c.req.param("id");
-	const user = await prisma.user.delete({
-		where: { id: id },
-	});
-	if (!id) {
-		return c.json({ message: "users Not Found" });
-	}
-	return c.json(`user by name ${user.username} deleted`);
-});
-
-app.put("/:username", async (c) => {
-	try {
-		const username = c.req.param("username");
-		const body = await c.req.json();
-		if (!username) {
-			return c.json({ message: `user not found`, Status: 404 });
-		}
-		const newUser = await prisma.user.update({
-			where: { username },
-			data: {
-				username: String(body.username),
-				email: String(body.email),
-			},
-		});
-		return c.json(newUser);
-	} catch (error) {
-		console.error(`Error user : ${error}`);
-	}
-});
-
 export default app;
