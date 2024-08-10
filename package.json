@@ -9,9 +9,6 @@
 		"seed": "prisma db seed",
 		"db:studio": "prisma studio"
 	},
-	"prisma": {
-		"seed": "tsx prisma/seed.ts"
-	},
 	"dependencies": {
 		"hono": "^4.5.3",
 		"@hono/zod-validator": "^0.2.2",

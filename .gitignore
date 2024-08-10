@@ -1,3 +1,7 @@
 # deps
 node_modules/
+<<<<<<< HEAD
 .env
+=======
+.env
+>>>>>>> 6384b14d0220f74b334ebe8e1e3feb5618cfd21f
