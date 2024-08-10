@@ -23,8 +23,13 @@ const app = new Hono();
 
 app.use("*", cors());
 app.get("/", (c) => {
-	c.json({
+	return c.json({
 		Message: "API Masak Mudah",
+		registeURL: "/auth/register",
+		loginURL: "/auth/login",
+		userURl: "/user",
+		recipesURL: "/recipes",
+		categoriesURL: "/categories",
 	});
 });
 
