@@ -1,9 +1,9 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
-import registerRoute from "./routes/register";
+import { registerRoute } from "./routes/register";
 import { userRoute } from "./routes/user";
-import loginRoute from "./routes/login";
+import { loginRoute } from "./routes/login";
 import { recipesRoute } from "./routes/recipes";
 import { categories } from "./routes/categories";
 

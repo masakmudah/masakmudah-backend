@@ -10,4 +10,4 @@ app.get("/", checkUserToken, async (c) => {
 	});
 });
 
-export default app;
+export const logoutRoute = app;

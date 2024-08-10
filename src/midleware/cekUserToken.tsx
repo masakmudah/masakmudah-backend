@@ -1,6 +1,6 @@
 import { createMiddleware } from "hono/factory";
 import { validateToken } from "../lib/jwt";
-import prisma from "../lib/prisma";
+import { prisma } from "../lib/prisma";
 
 export const checkUserToken = () => {
 	return createMiddleware(async (c, next) => {

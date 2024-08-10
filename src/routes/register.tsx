@@ -1,10 +1,10 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-import prisma from "../lib/prisma";
+import { prisma } from "../lib/prisma";
 import { hashPassword } from "../lib/password";
 
-export const app = new Hono();
+const app = new Hono();
 
 app.post(
 	"/",
@@ -47,4 +47,4 @@ app.post(
 	}
 );
 
-export default app;
+export const registerRoute = app;

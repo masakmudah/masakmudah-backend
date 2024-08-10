@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 
-import prisma from "../lib/prisma";
+import { prisma } from "../lib/prisma";
 import { verifyPassword } from "../lib/password";
 import { createToken } from "../lib/jwt";
 import { checkUserToken } from "../midleware/cekUserToken";
@@ -94,4 +94,4 @@ app.get("/auth/user", checkUserToken(), async (c, next) => {
 	});
 });
 
-export default app;
+export const loginRoute = app;
