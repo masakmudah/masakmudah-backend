@@ -29,10 +29,11 @@ app.get("/", (c) => {
 		usersURL: "/user",
 	});
 });
-app.route("/recipies", recipiesRoute);
 
 app.route("/auth/login", loginRoute);
 app.route("/auth/register", registerRoute);
 app.route("/user", userRoute);
+
+app.route("/recipies", recipiesRoute);
 
 export default app;

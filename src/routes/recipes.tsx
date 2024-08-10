@@ -27,29 +27,28 @@ app.get("/", async (c) => {
 
 app.get("/:slug", async (c) => {
 	try {
-		const searchSlug = c.req.query("q");
+		const slugParam = c.req.param("slug");
 
-		if (!searchSlug) {
-			const allRecipie = await prisma.recipes.findMany({
-				where: {},
-				orderBy: [{ createdAt: "desc" }],
-			});
-
-			return c.json(allRecipie);
+		if (!slugParam) {
+			return c.json({ message: "Recipe slug needed" }, 400);
 		}
 
-		const searchRecipe = await prisma.recipes.findMany({
-			where: {
-				recipe: {
-					contains: searchSlug,
-					mode: "insensitive",
-				},
-			},
+		const recipe = await prisma.recipes.findFirst({
+			where: { slug: slugParam },
 		});
 
-		return c.json(searchRecipe);
+		if (!recipe) {
+			return c.json({ message: "Recipe doesn't exist!" }, 404);
+		}
+
+		return c.json({
+			success: true,
+			message: `Recipe ${recipe.slug}`,
+			data: recipe,
+		});
 	} catch (err: any) {
-		console.log(err.message);
+		console.log(`Error retrieving recipe: ${err.message}`);
+		return c.json({ message: "Failed to retrieve recipe" }, 500);
 	}
 });
 

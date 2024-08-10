@@ -4,12 +4,12 @@ MasakMudah REST API is a web service that provides access to a large collection 
 
 ## Tech Stack
 
-- [Hono](https://hono.dev/) over [Bun](https://bun.sh/) runtime
-- [Typescript](https://www.typescriptlang.org/)
-- [Prisma ORM](https://www.prisma.io/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [Render](https://render.com/)
-- [Neon](https://neon.tech/)
+-   [Hono](https://hono.dev/) over [Bun](https://bun.sh/) runtime
+-   [Typescript](https://www.typescriptlang.org/)
+-   [Prisma ORM](https://www.prisma.io/)
+-   [PostgreSQL](https://www.postgresql.org/)
+-   [Render](https://render.com/)
+-   [Neon](https://neon.tech/)
 
 ## API Specification
 
@@ -19,8 +19,8 @@ For a more interactive experience, you can use SwaggerUI. It provides a user-fri
 
 You can also access the following:
 
-- OpenAPI Specification: https://api.masakmudah.com/api-spec
-- SwaggerUI: https://api.masakmudah.com/ui
+-   OpenAPI Specification: https://api.masakmudah.com/api-spec
+-   SwaggerUI: https://api.masakmudah.com/ui
 
 ## Database Design
 
@@ -55,3 +55,16 @@ bun run dev
 ```
 
 Afterwards, open your browser and navigate to http://localhost:3000 to start exploring the API.
+
+## Auth:
+
+| Endpoint         | HTTP | Permission    |
+| ---------------- | ---- | ------------- |
+| /users           | GET  | Public        |
+| /users/:username | GET  | Public        |
+| /auth/register   | POST | Public        |
+| /auth/login      | POST | Public        |
+| /auth/me         | GET  | Authenticated |
+| /auth/logout     | POST | Authenticated |
+
+# Recipe
