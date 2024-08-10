@@ -1,7 +1,7 @@
 import { Hono } from "hono";
-import prisma from "../lib/prisma";
+import { prisma } from "../lib/prisma";
 
-export const app = new Hono();
+const app = new Hono();
 
 app.get("/", async (c) => {
 	try {
@@ -97,4 +97,4 @@ app.put("/:username", async (c) => {
 	}
 });
 
-export default app;
+export const userRoute = app;

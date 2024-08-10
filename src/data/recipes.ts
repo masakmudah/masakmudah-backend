@@ -1,5 +1,6 @@
 export const recipes = [
 	{
+		id: "recipe-1",
 		recipe: "Nasi Goreng",
 		description: "Resep nasi goreng spesial.",
 		imageURL: "http://example.com/nasi-goreng.jpg",
@@ -9,6 +10,7 @@ export const recipes = [
 		userId: "user-id-123",
 	},
 	{
+		id: "recipe-2",
 		recipe: "Sate Ayam",
 		description: "Resep sate ayam dengan bumbu kacang.",
 		imageURL: "http://example.com/sate-ayam.jpg",
@@ -19,6 +21,7 @@ export const recipes = [
 		userId: "user-id-123",
 	},
 	{
+		id: "recipe-3",
 		recipe: "Rendang Daging",
 		description: "Resep rendang daging khas Padang.",
 		imageURL: "http://example.com/rendang.jpg",
@@ -28,6 +31,7 @@ export const recipes = [
 		userId: "user-id-124",
 	},
 	{
+		id: "recipe-4",
 		recipe: "Gado-Gado",
 		description: "Resep gado-gado sayur dengan saus kacang.",
 		imageURL: "http://example.com/gado-gado.jpg",
@@ -37,6 +41,7 @@ export const recipes = [
 		userId: "user-id-124",
 	},
 	{
+		id: "recipe-5",
 		recipe: "Bakso",
 		description: "Resep bakso daging sapi dengan kuah kaldu.",
 		imageURL: "http://example.com/bakso.jpg",
@@ -47,6 +52,7 @@ export const recipes = [
 		userId: "user-id-125",
 	},
 	{
+		id: "recipe-6",
 		recipe: "Mie Goreng",
 		description: "Resep mie goreng dengan telur dan sayuran.",
 		imageURL: "http://example.com/mie-goreng.jpg",
@@ -57,6 +63,7 @@ export const recipes = [
 		userId: "user-id-125",
 	},
 	{
+		id: "recipe-7",
 		recipe: "Soto Ayam",
 		description: "Resep soto ayam kuah kuning.",
 		imageURL: "http://example.com/soto-ayam.jpg",
@@ -67,6 +74,7 @@ export const recipes = [
 		userId: "user-id-126",
 	},
 	{
+		id: "recipe-8",
 		recipe: "Pecel Lele",
 		description: "Resep pecel lele dengan sambal terasi.",
 		imageURL: "http://example.com/pecel-lele.jpg",
@@ -77,6 +85,7 @@ export const recipes = [
 		userId: "user-id-126",
 	},
 	{
+		id: "recipe-9",
 		recipe: "Gudeg Jogja",
 		description: "Resep gudeg khas Jogja dengan nangka muda.",
 		imageURL: "http://example.com/gudeg.jpg",
@@ -87,6 +96,7 @@ export const recipes = [
 		userId: "user-id-127",
 	},
 	{
+		id: "recipe-10",
 		recipe: "Nasi Uduk",
 		description: "Resep nasi uduk dengan sambal kacang.",
 		imageURL: "http://example.com/nasi-uduk.jpg",

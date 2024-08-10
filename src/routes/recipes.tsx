@@ -3,7 +3,7 @@ import prisma from "../lib/prisma";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 
-export const app = new Hono();
+const app = new Hono();
 
 app.get("/", async (c) => {
 	try {
@@ -97,4 +97,4 @@ app.post(
 	}
 );
 
-export default app;
+export const recipesRoute = app;

@@ -1,9 +1,9 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
-import recipiesRoute from "./routes/recipes";
+import { recipesRoute } from "./routes/recipes";
 import registerRoute from "./routes/register";
-import userRoute from "./routes/user";
+import { userRoute } from "./routes/user";
 import loginRoute from "./routes/login";
 
 type Bindings = {
@@ -34,6 +34,6 @@ app.route("/auth/login", loginRoute);
 app.route("/auth/register", registerRoute);
 app.route("/user", userRoute);
 
-app.route("/recipies", recipiesRoute);
+app.route("/recipies", recipesRoute);
 
 export default app;
