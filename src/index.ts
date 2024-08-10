@@ -26,8 +26,7 @@ app.use("*", cors());
 app.route("/auth/login", loginRoute);
 app.route("/auth/register", registerRoute);
 app.route("/user", userRoute);
-app.route("/recipies", recipesRoute);
-app.route("/recipies", recipesRoute);
+app.route("/recipes", recipesRoute);
 app.route("/categories", categories);
 
 export default app;
