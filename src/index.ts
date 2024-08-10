@@ -22,6 +22,11 @@ export type HonoApp = { Bindings: Bindings; Variables: Variables };
 const app = new Hono();
 
 app.use("*", cors());
+app.get("/", (c) => {
+	c.json({
+		Message: "API Masak Mudah",
+	});
+});
 
 app.route("/auth/login", loginRoute);
 app.route("/auth/register", registerRoute);
