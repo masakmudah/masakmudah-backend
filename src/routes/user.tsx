@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import prisma from "../lib/prisma";
-import { hash, password } from "bun";
 
 export const app = new Hono();
 
@@ -8,6 +7,7 @@ app.get("/", async (c) => {
 	try {
 		const allUser = await prisma.user.findMany({
 			select: {
+				id: true,
 				username: true,
 				fullname: true,
 				createdAt: true,

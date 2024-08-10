@@ -1,5 +1,7 @@
 import { Hono } from "hono";
 import prisma from "../lib/prisma";
+import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
 
 export const app = new Hono();
 
@@ -9,13 +11,17 @@ app.get("/", async (c) => {
 		return c.json(
 			{
 				success: true,
-				message: "List data Risipes",
+				message: "List data Recipes",
 				data: allRecipie,
 			},
 			200
 		);
 	} catch (error) {
-		console.error(`Error get recipe : ${error}`);
+		console.error(`Error getting recipes: ${error}`);
+		return c.json(
+			{ success: false, message: "Failed to fetch recipes" },
+			500
+		);
 	}
 });
 
@@ -24,27 +30,71 @@ app.get("/:slug", async (c) => {
 		const slugParam = c.req.param("slug");
 
 		if (!slugParam) {
-			c.status(204);
-			return c.json({ message: "Recipie ID needed" });
+			return c.json({ message: "Recipe slug needed" }, 400);
 		}
 
-		const recipie = await prisma.recipes.findFirst({
+		const recipe = await prisma.recipes.findFirst({
 			where: { slug: slugParam },
 		});
 
-		if (recipie == null) {
-			c.status(204);
-			return c.json({ message: "Recipie doesn't exists!" });
+		if (!recipe) {
+			return c.json({ message: "Recipe doesn't exist!" }, 404);
 		}
 
 		return c.json({
 			success: true,
-			message: `Recipie ${recipie.slug}`,
-			data: recipie,
+			message: `Recipe ${recipe.slug}`,
+			data: recipe,
 		});
 	} catch (err: any) {
-		console.log(err.message);
+		console.log(`Error retrieving recipe: ${err.message}`);
+		return c.json({ message: "Failed to retrieve recipe" }, 500);
 	}
 });
+
+app.post(
+	"/create",
+	zValidator(
+		"json",
+		z.object({
+			recipe: z.string(),
+			description: z.string(),
+			imageURL: z.string().url(),
+			slug: z.string(),
+			ingredients: z.string(),
+			cookingIntructions: z.string(),
+			userId: z.string(),
+		})
+	),
+	async (c) => {
+		const body = c.req.valid("json");
+		try {
+			const newRecipe = await prisma.recipes.create({
+				data: {
+					recipe: body.recipe,
+					description: body.description,
+					imageURL: body.imageURL,
+					slug: body.slug,
+					ingredients: body.ingredients,
+					cookingIntructions: body.cookingIntructions,
+					userId: body.userId,
+				},
+			});
+			return c.json(
+				{
+					success: true,
+					message: "New recipe created successfully",
+					newRecipe: {
+						recipe: newRecipe.recipe,
+					},
+				},
+				201
+			);
+		} catch (error) {
+			console.error(`Error creating recipe: ${error}`);
+			return c.json({ message: "Cannot create recipe." }, 400);
+		}
+	}
+);
 
 export default app;
