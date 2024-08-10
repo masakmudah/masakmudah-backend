@@ -8,8 +8,8 @@ app.get("/", async (c) => {
 	try {
 		const allUser = await prisma.user.findMany({
 			select: {
-				id: true,
 				username: true,
+				fullname: true,
 				createdAt: true,
 				updatedAt: true,
 				password: {
@@ -40,6 +40,8 @@ app.get("/:username", async (c) => {
 			select: {
 				id: true,
 				username: true,
+				fullname: true,
+				email: true,
 				createdAt: true,
 				updatedAt: true,
 			},
@@ -87,8 +89,6 @@ app.put("/:username", async (c) => {
 				username: String(body.username),
 				email: String(body.email),
 				fullname: String(body.firstName),
-				address: String(body.address),
-				phoneNumber: String(body.phoneNumber),
 			},
 		});
 		return c.json(newUser);
