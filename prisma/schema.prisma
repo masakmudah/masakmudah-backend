@@ -41,7 +41,7 @@ model Recipes {
   recipe             String
   description        String
   imageURL           String
-  slug               String
+  slug               String @unique
   ingredients        String
   cookingIntructions String
 

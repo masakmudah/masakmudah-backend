@@ -4,7 +4,9 @@ import { prisma } from "../src/lib/prisma";
 async function seed() {
 	for (let recipe of recipes) {
 		const newRecipesSeed = await prisma.recipes.upsert({
-			where: { slug: recipe.slug },
+			where: {
+				slug: recipe.slug, // Menggunakan slug sebagai nilai unik
+			},
 			update: recipe,
 			create: recipe,
 		});
