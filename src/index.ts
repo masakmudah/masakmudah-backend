@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
+import { categories } from "./routes/categories";
 import recipiesRoute from "./routes/recipes";
 import registerRoute from "./routes/register";
 import userRoute from "./routes/user";
@@ -27,13 +28,16 @@ app.get("/", (c) => {
 		registerURL: "/auth/register",
 		loginURL: "/auth/login",
 		usersURL: "/user",
+		categories: "/categories",
 	});
 });
 
 app.route("/auth/login", loginRoute);
 app.route("/auth/register", registerRoute);
 app.route("/user", userRoute);
+categories: "/categories",
 
 app.route("/recipies", recipiesRoute);
+app.route("/categories", categories);
 
 export default app;
