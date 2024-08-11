@@ -1,3 +1,4 @@
+import { categoryRecipes } from "../src/data/category-recipes";
 import { categories } from "../src/data/categories";
 import { recipes } from "../src/data/recipes";
 import { prisma } from "../src/lib/prisma";
@@ -23,6 +24,19 @@ async function seed() {
       create: category,
     });
     console.log(`Category : ${newCategoriesSeed.category}`);
+  }
+
+  for (let catRecipe of categoryRecipes) {
+    const newCatRecipesSeed = await prisma.categoryRecipes.upsert({
+      where: {
+        id: catRecipe.id, // Menggunakan id sebagai nilai unik
+      },
+      update: catRecipe,
+      create: catRecipe,
+    });
+    console.log(
+      `Category Recipe : ${newCatRecipesSeed.categoryId} for ${newCatRecipesSeed.recipeId}`
+    );
   }
 }
 

@@ -51,7 +51,7 @@ model Recipes {
   updatedAt DateTime @updatedAt
 
   savedRecipes    SavedRecipes[]
-  CategoryRecipes CategoryRecipes[]
+  categoryRecipes CategoryRecipes[]
 }
 
 model Categories {
@@ -59,13 +59,13 @@ model Categories {
   category        String
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  CategoryRecipes CategoryRecipes[]
+  categoryRecipes CategoryRecipes[]
 }
 
 model CategoryRecipes {
   id         String     @id @default(cuid())
-  recipesId  String
-  recipes    Recipes    @relation(fields: [recipesId], references: [id], onDelete: Cascade)
+  recipeId   String
+  recipes    Recipes    @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   categoryId String
   categories Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   createdAt  DateTime   @default(now())
