@@ -3,6 +3,7 @@ import { categories } from "../src/data/categories";
 import { recipes } from "../src/data/recipes";
 import { ingredients } from "../src/data/ingredients";
 import { instructions } from "../src/data/instructions";
+import { savedRecipes } from "../src/data/saved-recipes";
 import { prisma } from "../src/lib/prisma";
 
 async function seed() {
@@ -64,6 +65,19 @@ async function seed() {
     });
     console.log(
       `New instruction : ${instruction.recipeId} ${instruction.instruction}`
+    );
+  }
+
+  for (let savedRecipe of savedRecipes) {
+    const newSavedRecipeSeed = await prisma.savedRecipes.upsert({
+      where: {
+        id: savedRecipe.id, // Menggunakan id sebagai nilai unik
+      },
+      update: savedRecipe,
+      create: savedRecipe,
+    });
+    console.log(
+      `Category Recipe : ${newSavedRecipeSeed.recipeId} for ${newSavedRecipeSeed.userId}`
     );
   }
 }
