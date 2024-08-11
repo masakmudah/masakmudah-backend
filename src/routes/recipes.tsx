@@ -42,7 +42,11 @@ app.get("/:slug", async (c) => {
       where: { slug: slugParam },
       include: {
         categoryRecipes: { include: { categories: true } },
-        ingredients: true,
+        ingredients: {
+          orderBy: {
+            sequence: "asc",
+          },
+        },
       },
     });
 
