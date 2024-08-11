@@ -37,11 +37,12 @@ model SavedRecipes {
 }
 
 model Recipes {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   recipe      String
   description String
+  duration    String?
   imageURL    String
-  slug        String @unique @db.VarChar(255)
+  slug        String  @unique @db.VarChar(255)
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
