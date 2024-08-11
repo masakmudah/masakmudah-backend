@@ -41,11 +41,11 @@ model Recipes {
   recipe             String
   description        String
   imageURL           String
-  slug               String @unique
+  slug               String @unique @db.VarChar(255)
   ingredients        String
   cookingIntructions String
 
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
