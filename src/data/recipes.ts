@@ -3,9 +3,9 @@ export const recipes = [
     id: "recipe-1",
     recipe: "Nasi Goreng",
     description: "Resep nasi goreng spesial.",
-    imageURL: "http://example.com/nasi-goreng.jpg",
+    imageURL:
+      "https://img-global.cpcdn.com/recipes/9b66747d60cbff8e/640x640sq70/photo.webp",
     slug: "nasi-goreng",
-    ingredients: "Nasi, Kecap, Telur",
     cookingIntructions: "Goreng nasi dengan kecap dan telur.",
     userId: "user-1",
   },
@@ -13,9 +13,9 @@ export const recipes = [
     id: "recipe-2",
     recipe: "Sate Ayam",
     description: "Resep sate ayam dengan bumbu kacang.",
-    imageURL: "http://example.com/sate-ayam.jpg",
+    imageURL:
+      "https://img-global.cpcdn.com/recipes/8aaae9483e227043/640x640sq70/photo.webp",
     slug: "sate-ayam",
-    ingredients: "Ayam, Bumbu kacang, Kecap",
     cookingIntructions:
       "Tusuk ayam, panggang, dan sajikan dengan bumbu kacang.",
     userId: "user-2",
@@ -24,9 +24,9 @@ export const recipes = [
     id: "recipe-3",
     recipe: "Rendang Daging",
     description: "Resep rendang daging khas Padang.",
-    imageURL: "http://example.com/rendang.jpg",
+    imageURL:
+      "https://img-global.cpcdn.com/recipes/71371aa56173f543/640x640sq70/photo.webp",
     slug: "rendang-daging",
-    ingredients: "Daging sapi, Santan, Bumbu rendang",
     cookingIntructions: "Masak daging dengan bumbu rendang hingga empuk.",
     userId: "user-1",
   },
@@ -34,9 +34,9 @@ export const recipes = [
     id: "recipe-4",
     recipe: "Gado-Gado",
     description: "Resep gado-gado sayur dengan saus kacang.",
-    imageURL: "http://example.com/gado-gado.jpg",
+    imageURL:
+      "https://img-global.cpcdn.com/recipes/609289176a0bd330/640x640sq70/photo.webp",
     slug: "gado-gado",
-    ingredients: "Sayuran, Tahu, Tempe, Saus kacang",
     cookingIntructions: "Campur sayuran dengan saus kacang dan sajikan.",
     userId: "user-2",
   },
@@ -44,9 +44,9 @@ export const recipes = [
     id: "recipe-5",
     recipe: "Bakso",
     description: "Resep bakso daging sapi dengan kuah kaldu.",
-    imageURL: "http://example.com/bakso.jpg",
+    imageURL:
+      "https://img-global.cpcdn.com/recipes/410f986bf2d274d7/640x640sq70/photo.webp",
     slug: "bakso",
-    ingredients: "Daging sapi, Tepung, Bumbu bakso, Kuah kaldu",
     cookingIntructions: "Bentuk bakso, rebus, dan sajikan dengan kuah kaldu.",
     userId: "user-1",
   },
@@ -54,9 +54,9 @@ export const recipes = [
     id: "recipe-6",
     recipe: "Mie Goreng",
     description: "Resep mie goreng dengan telur dan sayuran.",
-    imageURL: "http://example.com/mie-goreng.jpg",
+    imageURL:
+      "https://img-global.cpcdn.com/recipes/4b79019187c13f75/640x640sq70/photo.webp",
     slug: "mie-goreng",
-    ingredients: "Mie, Sayuran, Telur, Kecap",
     cookingIntructions: "Tumis mie dengan sayuran dan telur, tambahkan kecap.",
     userId: "user-2",
   },
@@ -64,9 +64,9 @@ export const recipes = [
     id: "recipe-7",
     recipe: "Soto Ayam",
     description: "Resep soto ayam kuah kuning.",
-    imageURL: "http://example.com/soto-ayam.jpg",
+    imageURL:
+      "https://img-global.cpcdn.com/recipes/3b54f33e81fc64c8/640x640sq70/photo.webp",
     slug: "soto-ayam",
-    ingredients: "Ayam, Bumbu soto, Santan, Kunyit",
     cookingIntructions: "Rebus ayam dengan bumbu soto, sajikan dengan nasi.",
     userId: "user-1",
   },
@@ -74,9 +74,9 @@ export const recipes = [
     id: "recipe-8",
     recipe: "Pecel Lele",
     description: "Resep pecel lele dengan sambal terasi.",
-    imageURL: "http://example.com/pecel-lele.jpg",
+    imageURL:
+      "https://img-global.cpcdn.com/recipes/457e8176ae1d550c/640x640sq70/photo.webp",
     slug: "pecel-lele",
-    ingredients: "Lele, Sambal terasi, Lalapan",
     cookingIntructions:
       "Goreng lele dan sajikan dengan sambal terasi dan lalapan.",
     userId: "user-2",
@@ -85,9 +85,9 @@ export const recipes = [
     id: "recipe-9",
     recipe: "Gudeg Jogja",
     description: "Resep gudeg khas Jogja dengan nangka muda.",
-    imageURL: "http://example.com/gudeg.jpg",
+    imageURL:
+      "https://img-global.cpcdn.com/recipes/3dfd2e7d0cda4552/640x640sq70/photo.webp",
     slug: "gudeg-jogja",
-    ingredients: "Nangka muda, Santan, Bumbu gudeg",
     cookingIntructions:
       "Masak nangka dengan bumbu gudeg dan santan hingga empuk.",
     userId: "user-1",
@@ -96,9 +96,9 @@ export const recipes = [
     id: "recipe-10",
     recipe: "Nasi Uduk",
     description: "Resep nasi uduk dengan sambal kacang.",
-    imageURL: "http://example.com/nasi-uduk.jpg",
+    imageURL:
+      "https://img-global.cpcdn.com/recipes/ad009aa4e8049ce0/640x640sq70/photo.webp",
     slug: "nasi-uduk",
-    ingredients: "Nasi, Santan, Bumbu nasi uduk, Sambal kacang",
     cookingIntructions:
       "Masak nasi dengan santan dan bumbu, sajikan dengan sambal kacang.",
     userId: "user-2",
