@@ -52,6 +52,7 @@ model Recipes {
   savedRecipes    SavedRecipes[]
   categoryRecipes CategoryRecipes[]
   ingredients     Ingredients[]
+  Instructions    Instructions[]
 }
 
 model Categories {
@@ -82,4 +83,14 @@ model Ingredients {
   sequence   Int      @default(0)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now())
+}
+
+model Instructions {
+  id          String   @id @default(cuid())
+  recipeId    String
+  recipes     Recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  instruction String
+  sequence    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 }
