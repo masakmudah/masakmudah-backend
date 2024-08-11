@@ -3,28 +3,18 @@ import { prisma } from "../lib/prisma";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 
-export const app = new Hono();
+const app = new Hono();
 
 app.get("/", async (c) => {
   try {
-    // const getPosts = await prisma.post.findMany({
-    // 	where: {
-    // 	  title: {
-    // 		contains: 'cookies',
-    // 	  },
-    // 	},
-    // 	include: {
-    // 	  author: true, // Return all fields
-    // 	},
-    //   })
     const allRecipes = await prisma.recipes.findMany({
-      where: {
-        //   title: {
-        // 	contains: 'cookies',
-        //   },
-      },
+      where: {},
       orderBy: { createdAt: "desc" },
-      include: { categoryRecipes: { include: { categories: true } } },
+      include: {
+        categoryRecipes: {
+          include: { categories: true },
+        },
+      },
     });
     return c.json(
       {
@@ -50,11 +40,7 @@ app.get("/:slug", async (c) => {
 
     const recipe = await prisma.recipes.findFirst({
       where: { slug: slugParam },
-      include: {
-        categoryRecipes: {
-          include: { categories: true },
-        },
-      },
+      include: { categoryRecipes: { include: { categories: true } } },
     });
 
     if (!recipe) {
@@ -117,4 +103,4 @@ app.post(
   }
 );
 
-export default app;
+export const recipesRoute = app;
