@@ -1,3 +1,4 @@
+import { categories } from "../src/data/categories";
 import { recipes } from "../src/data/recipes";
 import { prisma } from "../src/lib/prisma";
 
@@ -11,6 +12,17 @@ async function seed() {
       create: recipe,
     });
     console.log(`Recipe : ${newRecipesSeed.slug}`);
+  }
+
+  for (let category of categories) {
+    const newCategoriesSeed = await prisma.categories.upsert({
+      where: {
+        id: category.id, // Menggunakan id sebagai nilai unik
+      },
+      update: category,
+      create: category,
+    });
+    console.log(`Category : ${newCategoriesSeed.category}`);
   }
 }
 

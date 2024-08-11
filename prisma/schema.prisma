@@ -50,15 +50,24 @@ model Recipes {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  savedRecipes SavedRecipes[]
-  categories   Categories[]
+  savedRecipes    SavedRecipes[]
+  CategoryRecipes CategoryRecipes[]
 }
 
 model Categories {
-  id        String   @id @default(cuid())
-  name      String
-  recipeId  String
-  recipes   Recipes  @relation(fields: [recipeId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String            @id @default(cuid())
+  category        String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  CategoryRecipes CategoryRecipes[]
+}
+
+model CategoryRecipes {
+  id         String     @id @default(cuid())
+  recipesId  String
+  recipes    Recipes    @relation(fields: [recipesId], references: [id], onDelete: Cascade)
+  categoryId String
+  categories Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 }
