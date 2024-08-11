@@ -47,6 +47,11 @@ app.get("/:slug", async (c) => {
             sequence: "asc",
           },
         },
+        instructions: {
+          orderBy: {
+            sequence: "asc",
+          },
+        },
       },
     });
 
