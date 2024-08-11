@@ -2,6 +2,7 @@ import { categoryRecipes } from "../src/data/category-recipes";
 import { categories } from "../src/data/categories";
 import { recipes } from "../src/data/recipes";
 import { ingredients } from "../src/data/ingredients";
+import { instructions } from "../src/data/instructions";
 import { prisma } from "../src/lib/prisma";
 
 async function seed() {
@@ -50,6 +51,19 @@ async function seed() {
     });
     console.log(
       `New ingredient : ${ingredient.count} ${ingredient.measure} ${ingredient.ingredient} `
+    );
+  }
+
+  for (let instruction of instructions) {
+    const newInstructionSeed = await prisma.instructions.upsert({
+      where: {
+        id: instruction.id, // Menggunakan id sebagai nilai unik
+      },
+      update: instruction,
+      create: instruction,
+    });
+    console.log(
+      `New instruction : ${instruction.recipeId} ${instruction.instruction}`
     );
   }
 }

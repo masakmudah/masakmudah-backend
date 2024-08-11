@@ -52,7 +52,7 @@ model Recipes {
   savedRecipes    SavedRecipes[]
   categoryRecipes CategoryRecipes[]
   ingredients     Ingredients[]
-  Instructions    Instructions[]
+  instructions    Instructions[]
 }
 
 model Categories {
