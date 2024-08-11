@@ -1,6 +1,7 @@
 import { categoryRecipes } from "../src/data/category-recipes";
 import { categories } from "../src/data/categories";
 import { recipes } from "../src/data/recipes";
+import { ingredients } from "../src/data/ingredients";
 import { prisma } from "../src/lib/prisma";
 
 async function seed() {
@@ -36,6 +37,19 @@ async function seed() {
     });
     console.log(
       `Category Recipe : ${newCatRecipesSeed.categoryId} for ${newCatRecipesSeed.recipeId}`
+    );
+  }
+
+  for (let ingredient of ingredients) {
+    const newIngredientSeed = await prisma.ingredients.upsert({
+      where: {
+        id: ingredient.id, // Menggunakan id sebagai nilai unik
+      },
+      update: ingredient,
+      create: ingredient,
+    });
+    console.log(
+      `New ingredient : ${ingredient.count} ${ingredient.measure} ${ingredient.ingredient} `
     );
   }
 }

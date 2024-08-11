@@ -42,7 +42,6 @@ model Recipes {
   description        String
   imageURL           String
   slug               String @unique @db.VarChar(255)
-  ingredients        String
   cookingIntructions String
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -52,6 +51,7 @@ model Recipes {
 
   savedRecipes    SavedRecipes[]
   categoryRecipes CategoryRecipes[]
+  ingredients     Ingredients[]
 }
 
 model Categories {
@@ -70,4 +70,16 @@ model CategoryRecipes {
   categories Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+}
+
+model Ingredients {
+  id         String   @id @default(cuid())
+  recipeId   String
+  recipes    Recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient String
+  count      Int
+  measure    String
+  sequence   Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
 }
