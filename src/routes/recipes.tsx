@@ -2,8 +2,10 @@ import { Hono } from "hono";
 import { prisma } from "../lib/prisma";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
+import { checkUserToken } from "../midleware/cekUserToken";
+import { HonoApp } from "..";
 
-const app = new Hono();
+const app = new Hono<HonoApp>();
 
 app.get("/", async (c) => {
   try {
@@ -72,6 +74,7 @@ app.get("/:slug", async (c) => {
 
 app.post(
   "/create",
+  checkUserToken(),
   zValidator(
     "json",
     z.object({
@@ -85,6 +88,7 @@ app.post(
     })
   ),
   async (c) => {
+    const user = c.get("user");
     const body = c.req.valid("json");
     try {
       const newRecipe = await prisma.recipes.create({
