@@ -40,7 +40,10 @@ app.get("/:slug", async (c) => {
 
     const recipe = await prisma.recipes.findFirst({
       where: { slug: slugParam },
-      include: { categoryRecipes: { include: { categories: true } } },
+      include: {
+        categoryRecipes: { include: { categories: true } },
+        ingredients: true,
+      },
     });
 
     if (!recipe) {
