@@ -1,9 +1,12 @@
 import { Hono } from "hono";
-// import prisma from "../lib/prisma";
-// import { zValidator } from "@hono/zod-validator";
-// import { z } from "zod";
+import {prisma} from "../lib/prisma";
+import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
+import { checkUserToken } from "../midleware/cekUserToken";
 
-const app = new Hono();
+import { HonoApp } from "..";
+
+const app = new Hono<HonoApp>();
 
 app.get("/", async (c) => {
 	try {
@@ -48,5 +51,88 @@ app.get("/", async (c) => {
 		);
 	}
 });
+
+
+app.get("/allCategories", checkUserToken(), async (c) => {
+	try {
+		const categories = await prisma.categories.findMany({
+  include: {
+    categoryRecipes: true,
+  },
+		})
+		
+		return c.json(categories)
+	} catch (error) {
+		console.error("Data Categories notfound  ");
+		return c.json({ message: "Cannot create Category." }, 400);
+	}
+	
+
+})
+
+app.post(
+  "/create",
+  checkUserToken(),
+  zValidator(
+    "json",
+    z.object({
+      category: z.string(),
+    })
+  ),
+  async (c) => {
+    const user = c.get("user");
+    const body = c.req.valid("json");
+    try {
+			const newCategory = await prisma.categories.create({
+				
+        data: {
+          category: body.category,
+				},
+			});
+			
+      return c.json(
+        {
+          success: true,
+          message: "New categories created successfully",
+          newCategory: {
+            category: newCategory.category,
+          },
+        },
+        201
+      );
+    } catch (error) {
+      console.error(`Error creating category: ${error}`);
+      return c.json({ message: "Cannot create Category." }, 400);
+    }
+  }
+);
+
+
+app.put("/:id", checkUserToken(), async (c) => {
+	
+try {
+	const id = c.req.param("id");
+	const body = await c.req.json();
+	
+	if (!id) {
+			return c.json({ message: `Categori not found`, Status: 404 });
+	}
+	
+		const newCategory = await prisma.categories.update({
+			where: { id },
+			data: {
+				category: String(body.category),
+			},
+		});
+	
+		return c.json(newCategory);
+	
+	
+} catch (error) {
+	
+	console.error(`Error Category : ${error}`);
+}
+
+})
 
 export const categories = app;

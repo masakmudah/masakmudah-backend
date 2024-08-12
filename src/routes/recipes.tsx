@@ -97,8 +97,6 @@ app.post(
           description: body.description,
           imageURL: body.imageURL,
           slug: body.slug,
-          ingredients: body.ingredients,
-          cookingIntructions: body.cookingIntructions,
           userId: body.userId,
         },
       });
