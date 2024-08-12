@@ -6,7 +6,41 @@ import { instructions } from "../src/data/instructions";
 import { savedRecipes } from "../src/data/saved-recipes";
 import { prisma } from "../src/lib/prisma";
 
+import { passwords } from "../src/data/passwords";
+import { users } from "../src/data/users";
+
 async function seed() {
+  // Seed users
+  for (let user of users) {
+    const newUserSeed = await prisma.user.upsert({
+      where: { id: user.id },
+      update: user,
+      create: user,
+    });
+    console.log(`User: ${newUserSeed.username}`);
+  }
+
+  // Seed passwords
+  for (let password of passwords) {
+    const newPasswordSeed = await prisma.password.upsert({
+      where: { id: password.id },
+      update: {
+        hash: password.hash,
+        user: {
+          connect: { id: password.userId },
+        },
+      },
+      create: {
+        id: password.id,
+        hash: password.hash,
+        user: {
+          connect: { id: password.userId },
+        },
+      },
+    });
+    console.log(`Password for userId: ${newPasswordSeed.userId}`);
+  }
+
   for (let recipe of recipes) {
     const newRecipesSeed = await prisma.recipes.upsert({
       where: {
@@ -29,13 +63,13 @@ async function seed() {
     console.log(`Category : ${newCategoriesSeed.category}`);
   }
 
-  for (let catRecipe of categoryRecipes) {
+  for (let categoryRecipe of categoryRecipes) {
     const newCatRecipesSeed = await prisma.categoryRecipes.upsert({
       where: {
-        id: catRecipe.id, // Menggunakan id sebagai nilai unik
+        id: categoryRecipe.id, // Menggunakan id sebagai nilai unik
       },
-      update: catRecipe,
-      create: catRecipe,
+      update: categoryRecipe,
+      create: categoryRecipe,
     });
     console.log(
       `Category Recipe : ${newCatRecipesSeed.categoryId} for ${newCatRecipesSeed.recipeId}`
@@ -51,7 +85,7 @@ async function seed() {
       create: ingredient,
     });
     console.log(
-      `New ingredient : ${ingredient.count} ${ingredient.measure} ${ingredient.ingredient} `
+      `New ingredient : ${newIngredientSeed.count} ${newIngredientSeed.measure} ${newIngredientSeed.ingredient} `
     );
   }
 
@@ -64,7 +98,7 @@ async function seed() {
       create: instruction,
     });
     console.log(
-      `New instruction : ${instruction.recipeId} ${instruction.instruction}`
+      `New instruction : ${newInstructionSeed.recipeId} ${newInstructionSeed.instruction}`
     );
   }
 

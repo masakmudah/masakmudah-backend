@@ -8,89 +8,123 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(cuid())
-  username     String         @unique
-  fullname     String?
-  email        String         @unique
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  password     Password?
+  id       String  @id @default(cuid())
+  username String  @unique
+  email    String  @unique
+  fullname String?
+
+  passwordId String?   @unique
+  password   Password? @relation
+
   savedRecipes SavedRecipes[]
   Recipes      Recipes[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
 }
 
 model Password {
-  id     String @id @default(cuid())
-  hash   String
-  user   User   @relation(fields: [userId], references: [id])
+  id   String @id @default(cuid())
+  hash String @unique
+
   userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("passwords")
 }
 
 model SavedRecipes {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  recipeId  String
-  recipes   Recipes  @relation(fields: [recipeId], references: [id])
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  recipeId String
+  recipes  Recipes @relation(fields: [recipeId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("saved_recipes")
 }
 
 model Recipes {
   id          String  @id @default(cuid())
+  slug        String  @unique @db.VarChar(255)
   recipe      String
   description String
-  duration    String?
   imageURL    String
-  slug        String  @unique @db.VarChar(255)
+  duration    String?
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   savedRecipes    SavedRecipes[]
   categoryRecipes CategoryRecipes[]
   ingredients     Ingredients[]
   instructions    Instructions[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("recipes")
 }
 
 model Categories {
-  id              String            @id @default(cuid())
-  category        String
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
+  id       String @id @default(cuid())
+  category String
+
   categoryRecipes CategoryRecipes[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
 }
 
 model CategoryRecipes {
-  id         String     @id @default(cuid())
-  recipeId   String
-  recipes    Recipes    @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  id String @id @default(cuid())
+
+  recipeId String
+  recipes  Recipes @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
   categoryId String
   categories Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("category_recipes")
 }
 
 model Ingredients {
-  id         String   @id @default(cuid())
-  recipeId   String
-  recipes    Recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  ingredient String
+  id         String @id @default(cuid())
+  sequence   Int    @default(0)
   count      Int
+  ingredient String
   measure    String
-  sequence   Int      @default(0)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
+
+  recipeId String
+  recipes  Recipes @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("ingredients")
 }
 
 model Instructions {
-  id          String   @id @default(cuid())
-  recipeId    String
-  recipes     Recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  id          String @id @default(cuid())
+  sequence    Int    @default(0)
   instruction String
-  sequence    Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
+
+  recipeId String
+  recipes  Recipes @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("instructions")
 }
