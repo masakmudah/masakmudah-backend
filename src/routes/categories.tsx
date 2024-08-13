@@ -52,12 +52,14 @@ app.get("/", async (c) => {
   }
 });
 
-app.get("/allCategories", checkUserToken(), async (c) => {
+app.get("/allCategories", async (c) => {
   try {
     const categories = await prisma.categories.findMany({
       select: {
+        id: true,
         category: true,
-        CategoryRecipes: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
 
