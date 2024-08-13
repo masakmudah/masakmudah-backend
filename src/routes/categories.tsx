@@ -106,7 +106,7 @@ app.post(
   }
 );
 
-app.put("/:id", checkUserToken(), async (c) => {
+app.delete("/:id", checkUserToken(), async (c) => {
   try {
     const id = c.req.param("id");
     const body = await c.req.json();
@@ -123,6 +123,24 @@ app.put("/:id", checkUserToken(), async (c) => {
     });
 
     return c.json(newCategory);
+  } catch (error) {
+    console.error(`Error Category : ${error}`);
+  }
+});
+
+app.put("/:id", checkUserToken(), async (c) => {
+  try {
+    const id = c.req.param("id");
+
+    if (!id) {
+      return c.json({ message: `Categori not found`, Status: 404 });
+    }
+
+    const category = await prisma.categories.delete({
+      where: { id },
+    });
+
+    return c.json(category);
   } catch (error) {
     console.error(`Error Category : ${error}`);
   }
