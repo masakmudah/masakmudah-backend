@@ -10,12 +10,18 @@ const app = new Hono<HonoApp>();
 app.get("/", async (c) => {
   try {
     const allRecipes = await prisma.recipes.findMany({
-      where: {},
-      orderBy: { createdAt: "desc" },
-      include: {
-        categoryRecipes: {
-          include: { categories: true },
-        },
+      select: {
+        id: true,
+        recipe: true,
+        slug: true,
+        description: true,
+        imageURL: true,
+        duration: true,
+        ingredients: true,
+        instructions: true,
+        categoryRecipes: true,
+        createdAt: true,
+        user: true,
       },
     });
     return c.json(
@@ -41,19 +47,18 @@ app.get("/:slug", async (c) => {
     }
 
     const recipe = await prisma.recipes.findFirst({
-      where: { slug: slugParam },
-      include: {
-        categoryRecipes: { include: { categories: true } },
-        ingredients: {
-          orderBy: {
-            sequence: "asc",
-          },
-        },
-        instructions: {
-          orderBy: {
-            sequence: "asc",
-          },
-        },
+      select: {
+        id: true,
+        recipe: true,
+        slug: true,
+        description: true,
+        imageURL: true,
+        duration: true,
+        ingredients: true,
+        instructions: true,
+        categoryRecipes: true,
+        createdAt: true,
+        user: true,
       },
     });
 
