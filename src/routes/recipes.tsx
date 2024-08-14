@@ -23,9 +23,14 @@ app.get("/", async (c) => {
             instruction: true,
           },
         },
+
         categoryRecipes: {
           select: {
-            categories: true,
+            categories: {
+              select: {
+                category: true,
+              },
+            },
           },
         },
         createdAt: true,
