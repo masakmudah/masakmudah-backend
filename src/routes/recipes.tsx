@@ -46,7 +46,10 @@ app.get("/:slug", async (c) => {
       return c.json({ message: "Recipe slug needed" }, 400);
     }
 
-    const recipe = await prisma.recipes.findFirst({
+    const recipe = await prisma.recipes.findUnique({
+      where: {
+        slug: slugParam,
+      },
       select: {
         id: true,
         recipe: true,
