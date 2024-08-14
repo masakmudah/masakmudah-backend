@@ -128,22 +128,46 @@ app.delete("/:id", checkUserToken(), async (c) => {
   }
 });
 
-app.put("/:id", checkUserToken(), async (c) => {
-  try {
-    const id = c.req.param("id");
+app.put(
+  "/:id",
+  checkUserToken(),
+  zValidator(
+    "json",
+    z.object({
+      category: z.string().optional(),
+    })
+  ),
+  async (c) => {
+    try {
+      const id = c.req.param("id");
 
-    if (!id) {
-      return c.json({ message: `Categori not found`, Status: 404 });
+      if (!id) {
+        return c.json({ message: "Category ID not provided", status: 400 });
+      }
+
+      const body = c.req.valid("json");
+
+      if (!body.category) {
+        return c.json({ message: "No update data provided", status: 400 });
+      }
+
+      const updatedCategory = await prisma.categories.update({
+        where: { id },
+        data: {
+          category: body.category,
+        },
+      });
+
+      return c.json(updatedCategory);
+    } catch (error) {
+      console.error(
+        `Error updating category: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
+      return c.json({ message: "Error updating category", status: 500 });
     }
-
-    const category = await prisma.categories.delete({
-      where: { id },
-    });
-
-    return c.json(category);
-  } catch (error) {
-    console.error(`Error Category : ${error}`);
   }
-});
+);
 
 export const categories = app;
