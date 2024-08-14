@@ -10,39 +10,19 @@ const app = new Hono<HonoApp>();
 
 app.get("/", async (c) => {
   try {
-    return c.json(
-      {
-        success: true,
-        message: "List data Categories",
-        data: [
-          {
-            id: "cat-1",
-            category: "Ayam",
-            createdAt: "2024-08-10T11:02:49.177Z",
-            updatedAt: "2024-08-10T11:02:49.177Z",
-          },
-          {
-            id: "cat-2",
-            category: "Sayuran",
-            createdAt: "2024-08-10T11:02:49.177Z",
-            updatedAt: "2024-08-10T11:02:49.177Z",
-          },
-          {
-            id: "cat-3",
-            category: "Sapi",
-            createdAt: "2024-08-10T11:02:49.177Z",
-            updatedAt: "2024-08-10T11:02:49.177Z",
-          },
-          {
-            id: "cat-4",
-            category: "Seafood",
-            createdAt: "2024-08-10T11:02:49.177Z",
-            updatedAt: "2024-08-10T11:02:49.177Z",
-          },
-        ],
+    const dataCategories = await prisma.categories.findMany({
+      select: {
+        id: true,
+        category: true,
+        categoryRecipes: true,
+        updatedAt: true,
       },
-      200
-    );
+    });
+    return c.json({
+      satatus: true,
+      message: "Data Categories",
+      dataCategories,
+    });
   } catch (error) {
     console.error(`Error getting categories: ${error}`);
     return c.json(
@@ -52,12 +32,15 @@ app.get("/", async (c) => {
   }
 });
 
-app.get("/allCategories", async (c) => {
+app.get("/:categories", async (c) => {
   try {
+    const categoryParam = c.req.param("categories");
     const categories = await prisma.categories.findMany({
+      where: { category: categoryParam },
       select: {
         id: true,
         category: true,
+        categoryRecipes: true,
         createdAt: true,
         updatedAt: true,
       },

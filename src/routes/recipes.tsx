@@ -18,8 +18,16 @@ app.get("/", async (c) => {
         imageURL: true,
         duration: true,
         ingredients: true,
-        instructions: true,
-        categoryRecipes: true,
+        instructions: {
+          select: {
+            instruction: true,
+          },
+        },
+        categoryRecipes: {
+          select: {
+            categories: true,
+          },
+        },
         createdAt: true,
         user: true,
       },
@@ -57,9 +65,25 @@ app.get("/:slug", async (c) => {
         description: true,
         imageURL: true,
         duration: true,
-        ingredients: true,
-        instructions: true,
-        categoryRecipes: true,
+        ingredients: {
+          select: {
+            ingredient: true,
+            measure: true,
+            count: true,
+            sequence: true,
+          },
+        },
+        instructions: {
+          select: {
+            instruction: true,
+            sequence: true,
+          },
+        },
+        categoryRecipes: {
+          select: {
+            categories: true,
+          },
+        },
         createdAt: true,
         user: true,
       },
