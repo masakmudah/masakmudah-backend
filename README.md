@@ -69,10 +69,20 @@ Afterwards, open your browser and navigate to http://localhost:3000 to start exp
 
 # Categories CRUD
 
-| Endpoint                  | HTTP   | Permission     |
-| ------------------------- | ------ | -------------- |
-| /categories               | GET    | Public / local |
-| /categories/allCategories | GET    | Public         |
-| /categories/create        | POST   | Authenticated  |
-| /categories/:id           | PUT    | Authenticated  |
-| /categories/:id           | DELETE | Authenticated  |
+| Endpoint                  | HTTP   | Permission    |
+| ------------------------- | ------ | ------------- |
+| /categories               | GET    | Public        |
+| /categories/allCategories | GET    | Public        |
+| /categories/create        | POST   | Authenticated |
+| /categories/:id           | PUT    | Authenticated |
+| /categories/:id           | DELETE | Authenticated |
+
+# Recipes CRUD
+
+| Endpoint        | HTTP   | Permission               |
+| --------------- | ------ | ------------------------ |
+| /recipes        | GET    | Public                   |
+| /recipes/:slug  | GET    | Public                   |
+| /recipes/create | POST   | Authenticated            |
+| /categories/:id | PUT    | Authenticated in progres |
+| /categories/:id | DELETE | Authenticated in progres |
