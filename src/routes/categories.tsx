@@ -98,14 +98,14 @@ app.delete("/:id", checkUserToken(), async (c) => {
       return c.json({ message: `Categori not found`, Status: 404 });
     }
 
-    const newCategory = await prisma.categories.update({
+    const newCategory = await prisma.categories.delete({
       where: { id },
-      data: {
-        category: String(body.category),
-      },
     });
 
-    return c.json(newCategory);
+    return c.json({
+      status: true,
+      message: `Categery with ${id} deleted`,
+    });
   } catch (error) {
     console.error(`Error Category : ${error}`);
   }
