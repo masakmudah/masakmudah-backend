@@ -80,39 +80,110 @@ app.post(
     z.object({
       recipe: z.string(),
       description: z.string(),
+      duration: z.string().optional(),
       imageURL: z.string().url(),
       slug: z.string(),
-      ingredients: z.string(),
-      cookingIntructions: z.string(),
-      userId: z.string(),
+      ingredients: z.array(
+        z.object({
+          ingredient: z.string(),
+          count: z.number(),
+          measure: z.string(),
+          sequence: z.number().optional().default(0),
+        })
+      ),
+      instructions: z.array(
+        z.object({
+          instruction: z.string(),
+          sequence: z.number().optional().default(0),
+        })
+      ),
+      categories: z.array(z.string()),
     })
   ),
   async (c) => {
     const user = c.get("user");
-    const body = c.req.valid("json");
+
     try {
+      const body = c.req.valid("json");
+
+      const categoryIds: string[] = [];
+      for (const categoryName of body.categories) {
+        let category = await prisma.categories.findFirst({
+          where: { category: categoryName },
+        });
+
+        if (!category) {
+          category = await prisma.categories.create({
+            data: { category: categoryName },
+          });
+        }
+
+        categoryIds.push(category.id);
+      }
+
       const newRecipe = await prisma.recipes.create({
         data: {
           recipe: body.recipe,
           description: body.description,
+          duration: body.duration,
           imageURL: body.imageURL,
           slug: body.slug,
-          userId: body.userId,
+          userId: user.id,
+          ingredients: {
+            create: body.ingredients.map((ing) => ({
+              ingredient: ing.ingredient,
+              count: ing.count,
+              measure: ing.measure,
+              sequence: ing.sequence,
+            })),
+          },
+          instructions: {
+            create: body.instructions.map((instr) => ({
+              instruction: instr.instruction,
+              sequence: instr.sequence,
+            })),
+          },
+          categoryRecipes: {
+            create: categoryIds.map((categoryId) => ({
+              categoryId: categoryId,
+            })),
+          },
+        },
+        include: {
+          ingredients: true,
+          instructions: true,
+          categoryRecipes: true,
         },
       });
+
       return c.json(
         {
           success: true,
           message: "New recipe created successfully",
           newRecipe: {
             recipe: newRecipe.recipe,
+            ingredients: newRecipe.ingredients,
+            instructions: newRecipe.instructions,
+            categories: newRecipe.categoryRecipes.map((cr) => cr.categoryId),
           },
         },
         201
       );
     } catch (error) {
-      console.error(`Error creating recipe: ${error}`);
-      return c.json({ message: "Cannot create recipe." }, 400);
+      console.error(
+        `Error creating recipe: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
+      return c.json(
+        {
+          success: false,
+          message: `Cannot create recipe: ${
+            error instanceof Error ? error.message : "Unknown error"
+          }`,
+        },
+        400
+      );
     }
   }
 );
