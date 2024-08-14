@@ -170,17 +170,11 @@ app.post(
         201
       );
     } catch (error) {
-      console.error(
-        `Error creating recipe: ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
-      );
+      console.error(`Error creating recipe`);
       return c.json(
         {
           success: false,
-          message: `Cannot create recipe: ${
-            error instanceof Error ? error.message : "Unknown error"
-          }`,
+          message: `Cannot create recipe`,
         },
         400
       );
