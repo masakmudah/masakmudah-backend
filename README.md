@@ -19,8 +19,8 @@ For a more interactive experience, you can use SwaggerUI. It provides a user-fri
 
 You can also access the following:
 
-- OpenAPI Specification: https://masakmudah-backend-ecfl.onrender.com//api-spec
-- SwaggerUI: https://masakmudah-backend-ecfl.onrender.com//ui
+- OpenAPI Specification: https://masakmudah-backend-ecfl.onrender.com/api-spec
+- SwaggerUI: https://masakmudah-backend-ecfl.onrender.com/ui
 
 ## Database Design
 
