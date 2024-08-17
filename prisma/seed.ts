@@ -5,8 +5,35 @@ import { ingredients } from "../src/data/ingredients";
 import { instructions } from "../src/data/instructions";
 import { savedRecipes } from "../src/data/saved-recipes";
 import { prisma } from "../src/lib/prisma";
+import { users } from "../src/data/users";
+import { hashPassword } from "../src/lib/password";
 
 async function seed() {
+  for (let user of users) {
+    const newUser = await prisma.user.upsert({
+      where: {
+        id: user.id,
+      },
+      update: {
+        email: user.email,
+        username: user.username,
+        fullname: user.fullname,
+      },
+      create: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        fullname: user.fullname,
+        password: {
+          create: {
+            hash: await hashPassword(user.password),
+          },
+        },
+      },
+    });
+
+    console.log(`User with id ${newUser.id} created`);
+  }
   for (let recipe of recipes) {
     const newRecipesSeed = await prisma.recipes.upsert({
       where: {
