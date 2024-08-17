@@ -8,13 +8,13 @@ import { recipesRoute } from "./routes/recipes";
 import { categories } from "./routes/categories";
 
 type Bindings = {
-	TOKEN: string;
+  TOKEN: string;
 };
 
 type Variables = {
-	user: {
-		id: string;
-	};
+  user: {
+    id: string;
+  };
 };
 
 export type HonoApp = { Bindings: Bindings; Variables: Variables };
@@ -23,19 +23,19 @@ const app = new Hono();
 
 app.use("*", cors());
 app.get("/", (c) => {
-	return c.json({
-		Message: "API Masak Mudah",
-		registeURL: "/auth/register",
-		loginURL: "/auth/login",
-		userURl: "/user",
-		recipesURL: "/recipes",
-		categoriesURL: "/categories",
-	});
+  return c.json({
+    Message: "API Masak Mudah",
+    registeURL: "/auth/register",
+    loginURL: "/auth/login",
+    usersURL: "/users",
+    recipesURL: "/recipes",
+    categoriesURL: "/categories",
+  });
 });
 
 app.route("/auth/login", loginRoute);
 app.route("/auth/register", registerRoute);
-app.route("/user", userRoute);
+app.route("/users", userRoute);
 app.route("/recipes", recipesRoute);
 app.route("/categories", categories);
 
