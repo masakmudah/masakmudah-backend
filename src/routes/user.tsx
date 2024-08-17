@@ -12,11 +12,6 @@ app.get("/", async (c) => {
         fullname: true,
         createdAt: true,
         updatedAt: true,
-        password: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
     return c.json(
