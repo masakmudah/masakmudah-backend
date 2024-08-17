@@ -10,7 +10,10 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
+    "@hono/swagger-ui": "^0.4.0",
+    "@hono/zod-openapi": "^0.15.3",
     "@hono/zod-validator": "^0.2.2",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^5.18.0",
     "hono": "^4.5.3",
     "oslo": "^1.2.0",
