@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { QueryUserSchema } from "./schema";
+import { QueryUserSchema, UserSchema } from "./schema";
 import { prisma } from "../lib/prisma";
 
 export async function getAll(query: z.infer<typeof QueryUserSchema>) {
@@ -51,9 +51,9 @@ export async function getAll(query: z.infer<typeof QueryUserSchema>) {
   });
 }
 
-export async function get(id: string) {
+export async function get(username: string) {
   const user = await prisma.user.findUnique({
-    where: { id },
+    where: { username: username },
     select: {
       id: true,
       username: true,
@@ -65,4 +65,29 @@ export async function get(id: string) {
   });
 
   return user;
+}
+
+export async function deleteUser(id: string) {
+  const deletePassword = await prisma.password.deleteMany({
+    where: { userId: id },
+  });
+
+  const deleteUser = await prisma.user.deleteMany({
+    where: { id: id },
+  });
+
+  return deleteUser;
+}
+
+export async function updateUser(
+  username: string,
+  body: z.infer<typeof UserSchema>
+) {
+  return await prisma.user.update({
+    where: { username: username },
+    data: {
+      fullname: body.fullname,
+      email: body.email,
+    },
+  });
 }
