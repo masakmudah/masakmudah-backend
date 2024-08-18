@@ -48,7 +48,6 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
           },
         },
       },
-      createdAt: true,
       user: {
         select: {
           id: true,
@@ -57,6 +56,8 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
           email: true,
         },
       },
+      createdAt: true,
+      updatedAt: true,
     },
     where: {
       OR: [
@@ -149,7 +150,6 @@ export async function getAllByCategoryId(
           },
         },
       },
-      createdAt: true,
       user: {
         select: {
           id: true,
@@ -158,6 +158,8 @@ export async function getAllByCategoryId(
           email: true,
         },
       },
+      createdAt: true,
+      updatedAt: true,
     },
     where: {
       categories: {
@@ -221,7 +223,6 @@ export async function get(slugParam: string) {
           },
         },
       },
-      createdAt: true,
       user: {
         select: {
           id: true,
@@ -230,6 +231,8 @@ export async function get(slugParam: string) {
           email: true,
         },
       },
+      createdAt: true,
+      updatedAt: true,
     },
   });
 
