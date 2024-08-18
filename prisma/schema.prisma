@@ -8,37 +8,37 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(cuid())
-  username     String         @unique
+  id           String        @id @default(cuid())
+  username     String        @unique
   fullname     String?
-  email        String         @unique
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  email        String        @unique
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   password     Password?
-  savedRecipes SavedRecipes[]
-  Recipes      Recipes[]
+  savedRecipes SavedRecipe[]
+  Recipes      Recipe[]
 }
 
 model Password {
   id     String @id @default(cuid())
   hash   String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 }
 
-model SavedRecipes {
+model SavedRecipe {
   id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   recipeId  String
-  recipes   Recipes  @relation(fields: [recipeId], references: [id])
+  recipes   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Recipes {
+model Recipe {
   id          String  @id @default(cuid())
-  recipe      String
+  name        String
   description String
   duration    String?
   imageURL    String
@@ -49,48 +49,48 @@ model Recipes {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  savedRecipes    SavedRecipes[]
-  categoryRecipes CategoryRecipes[]
-  ingredients     Ingredients[]
-  instructions    Instructions[]
+  savedRecipes SavedRecipe[]
+  categories   CategoryRecipe[]
+  ingredients  Ingredient[]
+  instructions Instruction[]
 }
 
-model Categories {
-  id              String            @id @default(cuid())
+model Category {
+  id              String           @id @default(cuid())
   category        String
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  categoryRecipes CategoryRecipes[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  categoryRecipes CategoryRecipe[]
 }
 
-model CategoryRecipes {
-  id         String     @id @default(cuid())
-  recipeId   String
-  recipes    Recipes    @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  categoryId String
-  categories Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-}
-
-model Ingredients {
+model CategoryRecipe {
   id         String   @id @default(cuid())
   recipeId   String
-  recipes    Recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  ingredient String
-  count      Int
-  measure    String
-  sequence   Int      @default(0)
+  recipes    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  categoryId String
+  categories Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
-model Instructions {
+model Ingredient {
   id          String   @id @default(cuid())
   recipeId    String
-  recipes     Recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  instruction String
+  recipes     Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  name        String
+  quantity    Int
+  measurement String
   sequence    Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
+}
+
+model Instruction {
+  id        String   @id @default(cuid())
+  recipeId  String
+  recipes   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  text      String
+  sequence  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
