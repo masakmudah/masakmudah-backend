@@ -73,10 +73,12 @@ usersRoute.openapi(
     method: "put",
     path: "/{username}",
     description: "Update user by username ",
-    body: {
-      content: {
-        "application/json": {
-          schema: UserSchema,
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: UserSchema,
+          },
         },
       },
     },
