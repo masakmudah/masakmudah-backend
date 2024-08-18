@@ -3,9 +3,9 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
 
 import { registerRoute } from "./routes/register";
-import { userRoute } from "./users/route";
+import { usersRoute } from "./users/route";
 import { loginRoute } from "./routes/login";
-import { recipesRoute } from "./routes/recipes";
+import { recipesRoute } from "./recipes/route";
 import { categories } from "./routes/categories";
 
 type Bindings = {
@@ -60,7 +60,7 @@ app.get("/", (c) => {
 
 app.route("/auth/login", loginRoute);
 app.route("/auth/register", registerRoute);
-app.route("/users", userRoute);
+app.route("/users", usersRoute);
 app.route("/recipes", recipesRoute);
 app.route("/categories", categories);
 
