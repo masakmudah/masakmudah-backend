@@ -5,10 +5,7 @@ export const QueryRecipeSchema = z.object({
 });
 
 export const SearchByCategorySchema = z.object({
-  categoryId: z
-    .string()
-    .optional()
-    .openapi({ example: "uuflc5ng06nqxge861rtpq4s" }),
+  categoryId: z.string().openapi({ example: "uuflc5ng06nqxge861rtpq4s" }),
 });
 
 export const DetailRecipeSchema = z.object({
