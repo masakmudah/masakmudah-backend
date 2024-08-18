@@ -1,14 +1,14 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import * as userService from "./service";
-import { QueryUserSchema, DetailUserSchema } from "./schema";
+import { QueryUserSchema, DetailUserSchema, UserSchema } from "./schema";
 import { z } from "zod";
 
 const API_TAG = ["Users"];
 
-const userRoute = new OpenAPIHono();
+const usersRoute = new OpenAPIHono();
 
 // GET ALL USERS
-userRoute.openapi(
+usersRoute.openapi(
   {
     method: "get",
     path: "/",
@@ -35,11 +35,11 @@ userRoute.openapi(
   }
 );
 
-userRoute.openapi(
+usersRoute.openapi(
   {
     method: "get",
-    path: "/{id}",
-    description: "Get detail user by id ",
+    path: "/{username}",
+    description: "Get detail user by username ",
     request: {
       params: DetailUserSchema,
     },
@@ -54,11 +54,8 @@ userRoute.openapi(
     tags: API_TAG,
   },
   async (c) => {
-    const idParam = c.req.param("id")!;
-    console.log(idParam);
-
-    const data = await userService.get(idParam);
-    console.log(data);
+    const usernameParam = c.req.param("username")!;
+    const data = await userService.get(usernameParam);
 
     if (!data) {
       return c.json({ message: "User not found" }, 404);
@@ -71,4 +68,79 @@ userRoute.openapi(
   }
 );
 
-export { userRoute };
+usersRoute.openapi(
+  {
+    method: "put",
+    path: "/{username}",
+    description: "Update user by username ",
+    body: {
+      content: {
+        "application/json": {
+          schema: UserSchema,
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: "Successfully update user",
+      },
+      404: {
+        description: "User not found",
+      },
+    },
+    tags: API_TAG,
+  },
+  async (c) => {
+    const usernameParam = c.req.param("username")!;
+    const body = await c.req.json();
+
+    const data = await userService.get(usernameParam);
+
+    if (!data) {
+      return c.json({ message: "User not found" }, 404);
+    }
+
+    const result = await userService.updateUser(usernameParam, body);
+
+    return c.json({
+      message: "Susscessfully update user",
+      result,
+    });
+  }
+);
+
+usersRoute.openapi(
+  {
+    method: "delete",
+    path: "/{username}",
+    description: "Delete detail user by username ",
+    request: {
+      params: DetailUserSchema,
+    },
+    responses: {
+      200: {
+        description: "Successfully delete user",
+      },
+      404: {
+        description: "User not found",
+      },
+    },
+    tags: API_TAG,
+  },
+  async (c) => {
+    const usernameParam = c.req.param("username")!;
+    const data = await userService.get(usernameParam);
+    if (!data) {
+      return c.json({ message: "User not found" }, 404);
+    }
+
+    const result = await userService.deleteUser(data.id);
+
+    return c.json({
+      message: "Susscessfully delete user",
+      result,
+    });
+  }
+);
+
+export { usersRoute };
