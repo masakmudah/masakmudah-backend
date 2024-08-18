@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  QueryRecipeSchema,
-  DetailRecipeSchema,
-  SearchByCategorySchema,
-} from "./schema";
+import { QueryRecipeSchema, SearchByCategorySchema } from "./schema";
 import { prisma } from "../lib/prisma";
 
 export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
@@ -37,7 +33,7 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
           sequence: "asc",
         },
       },
-      categoryRecipes: {
+      categories: {
         select: {
           categories: {
             select: {
@@ -138,7 +134,7 @@ export async function getAllByCategoryId(
           sequence: "asc",
         },
       },
-      categoryRecipes: {
+      categories: {
         select: {
           categories: {
             select: {
@@ -164,7 +160,7 @@ export async function getAllByCategoryId(
       },
     },
     where: {
-      categoryRecipes: {
+      categories: {
         some: { categoryId: { in: categoryIds } },
       },
     },
@@ -210,7 +206,7 @@ export async function get(slugParam: string) {
           sequence: "asc",
         },
       },
-      categoryRecipes: {
+      categories: {
         select: {
           categories: {
             select: {

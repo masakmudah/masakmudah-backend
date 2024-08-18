@@ -86,10 +86,7 @@ recipesRoute.openapi(
   },
   async (c) => {
     const slugParam = c.req.param("slug")!;
-    console.log(slugParam);
-
     const data = await recipeService.get(slugParam);
-    console.log(data);
 
     if (!data) {
       return c.json({ message: "Recipe not found" }, 404);
