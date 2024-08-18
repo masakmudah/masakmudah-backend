@@ -9,7 +9,7 @@ const app = new Hono<HonoApp>();
 
 app.get("/", async (c) => {
   try {
-    const allRecipes = await prisma.recipes.findMany({
+    const allRecipes = await prisma.recipe.findMany({
       select: {
         id: true,
         recipe: true,
@@ -24,7 +24,7 @@ app.get("/", async (c) => {
           },
         },
 
-        categoryRecipes: {
+        categories: {
           select: {
             categories: {
               select: {
@@ -59,7 +59,7 @@ app.get("/:slug", async (c) => {
       return c.json({ message: "Recipe slug needed" }, 400);
     }
 
-    const recipe = await prisma.recipes.findUnique({
+    const recipe = await prisma.recipe.findUnique({
       where: {
         slug: slugParam,
       },
@@ -84,7 +84,7 @@ app.get("/:slug", async (c) => {
             sequence: true,
           },
         },
-        categoryRecipes: {
+        categories: {
           select: {
             categories: true,
           },
@@ -158,7 +158,7 @@ app.post(
         categoryIds.push(category.id);
       }
 
-      const newRecipe = await prisma.recipes.create({
+      const newRecipe = await prisma.recipe.create({
         data: {
           recipe: body.recipe,
           description: body.description,
