@@ -35,7 +35,7 @@ async function seed() {
     console.log(`User with id ${newUser.id} created`);
   }
   for (let recipe of recipes) {
-    const newRecipesSeed = await prisma.recipes.upsert({
+    const newRecipesSeed = await prisma.recipe.upsert({
       where: {
         slug: recipe.slug, // Menggunakan slug sebagai nilai unik
       },
@@ -46,7 +46,7 @@ async function seed() {
   }
 
   for (let category of categories) {
-    const newCategoriesSeed = await prisma.categories.upsert({
+    const newCategoriesSeed = await prisma.category.upsert({
       where: {
         id: category.id, // Menggunakan id sebagai nilai unik
       },
@@ -57,7 +57,7 @@ async function seed() {
   }
 
   for (let catRecipe of categoryRecipes) {
-    const newCatRecipesSeed = await prisma.categoryRecipes.upsert({
+    const newCatRecipesSeed = await prisma.categoryRecipe.upsert({
       where: {
         id: catRecipe.id, // Menggunakan id sebagai nilai unik
       },
@@ -70,7 +70,7 @@ async function seed() {
   }
 
   for (let ingredient of ingredients) {
-    const newIngredientSeed = await prisma.ingredients.upsert({
+    const newIngredientSeed = await prisma.ingredient.upsert({
       where: {
         id: ingredient.id, // Menggunakan id sebagai nilai unik
       },
@@ -78,12 +78,12 @@ async function seed() {
       create: ingredient,
     });
     console.log(
-      `New ingredient : ${ingredient.count} ${ingredient.measure} ${ingredient.ingredient} `
+      `New ingredient : ${ingredient.quantity} ${ingredient.measurement} ${ingredient.name} `
     );
   }
 
   for (let instruction of instructions) {
-    const newInstructionSeed = await prisma.instructions.upsert({
+    const newInstructionSeed = await prisma.instruction.upsert({
       where: {
         id: instruction.id, // Menggunakan id sebagai nilai unik
       },
@@ -91,12 +91,12 @@ async function seed() {
       create: instruction,
     });
     console.log(
-      `New instruction : ${instruction.recipeId} ${instruction.instruction}`
+      `New instruction : ${instruction.recipeId} ${instruction.text}`
     );
   }
 
   for (let savedRecipe of savedRecipes) {
-    const newSavedRecipeSeed = await prisma.savedRecipes.upsert({
+    const newSavedRecipeSeed = await prisma.savedRecipe.upsert({
       where: {
         id: savedRecipe.id, // Menggunakan id sebagai nilai unik
       },
