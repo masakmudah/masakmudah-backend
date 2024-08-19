@@ -5,7 +5,7 @@ import { zValidator } from "@hono/zod-validator";
 import { prisma } from "../lib/prisma";
 import { verifyPassword } from "../lib/password";
 import { createToken } from "../lib/jwt";
-import { checkUserToken } from "../midleware/cek-user-token";
+import { checkUserToken } from "../midleware/check-user-token";
 
 type Bindings = {
   TOKEN: string;

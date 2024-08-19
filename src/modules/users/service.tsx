@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { QueryUserSchema, UserSchema } from "./schema";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../../lib/prisma";
 
 export async function getAll(query: z.infer<typeof QueryUserSchema>) {
   if (JSON.stringify(query) === "{}") {

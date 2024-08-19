@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { QueryRecipeSchema, SearchByCategorySchema } from "./schema";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../../lib/prisma";
 
 export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
   const allRecipes = await prisma.recipe.findMany({

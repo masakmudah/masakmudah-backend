@@ -3,9 +3,10 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
 
 import { registerRoute } from "./routes/register";
-import { usersRoute } from "./users/route";
 import { loginRoute } from "./routes/login";
-import { recipesRoute } from "./recipes/route";
+
+import { usersRoute } from "./modules/users/route";
+import { recipesRoute } from "./modules/recipes/route";
 import { categories } from "./routes/categories";
 
 type Bindings = {
