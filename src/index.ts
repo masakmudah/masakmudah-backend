@@ -25,7 +25,7 @@ const app = new OpenAPIHono({ strict: false });
 app.use("*", cors());
 
 // OPEN API
-app.doc31("/api-spec", {
+app.doc31("/doc", {
   openapi: "3.0.0",
   info: {
     version: "1.0.0",
@@ -65,6 +65,6 @@ app.route("/recipes", recipesRoute);
 app.route("/categories", categories);
 
 // SWAGGER UI
-app.get("/ui", swaggerUI({ url: "/api-spec" }));
+app.get("/ui", swaggerUI({ url: "/doc" }));
 
 export default app;
