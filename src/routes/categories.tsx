@@ -10,7 +10,7 @@ const app = new Hono<HonoApp>();
 
 app.get("/", async (c) => {
   try {
-    const dataCategories = await prisma.categories.findMany({
+    const dataCategories = await prisma.category.findMany({
       select: {
         id: true,
         category: true,
@@ -35,7 +35,7 @@ app.get("/", async (c) => {
 app.get("/:categories", async (c) => {
   try {
     const categoryParam = c.req.param("categories");
-    const categories = await prisma.categories.findMany({
+    const categories = await prisma.category.findMany({
       where: { category: categoryParam },
       select: {
         id: true,
@@ -66,7 +66,7 @@ app.post(
     const user = c.get("user");
     const body = c.req.valid("json");
     try {
-      const newCategory = await prisma.categories.create({
+      const newCategory = await prisma.category.create({
         data: {
           category: body.category,
         },
@@ -98,7 +98,7 @@ app.delete("/:id", checkUserToken(), async (c) => {
       return c.json({ message: `Categori not found`, Status: 404 });
     }
 
-    const newCategory = await prisma.categories.delete({
+    const newCategory = await prisma.category.delete({
       where: { id },
     });
 
@@ -134,7 +134,7 @@ app.put(
         return c.json({ message: "No update data provided", status: 400 });
       }
 
-      const updatedCategory = await prisma.categories.update({
+      const updatedCategory = await prisma.category.update({
         where: { id },
         data: {
           category: body.category,
