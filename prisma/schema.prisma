@@ -16,7 +16,7 @@ model User {
   updatedAt    DateTime      @updatedAt
   password     Password?
   savedRecipes SavedRecipe[]
-  Recipes      Recipe[]
+  recipes      Recipe[]
 }
 
 model Password {
@@ -24,6 +24,62 @@ model Password {
   hash   String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
+}
+
+model Ingredient {
+  id String @id @default(cuid())
+
+  name String
+  slug String @unique @default("")
+
+  ingredientItems IngredientItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model IngredientItem {
+  id String @id @default(cuid())
+
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  ingredientId String
+
+  quantity    Int
+  measurement String
+  sequence    Int    @default(0)
+
+  recipes Recipe[]
+}
+
+model Recipe {
+  id String @id @default(cuid())
+
+  name        String
+  description String
+  duration    String?
+  imageURL    String
+  slug        String  @unique @db.VarChar(255)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  categories      Category[]
+  ingredientItems IngredientItem[]
+  instructions    Json? // Array of Objects
+  savedRecipes    SavedRecipe[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id String @id @default(cuid())
+
+  name    String
+  recipes Recipe[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model SavedRecipe {
@@ -34,63 +90,4 @@ model SavedRecipe {
   recipes   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model Recipe {
-  id          String  @id @default(cuid())
-  name        String
-  description String
-  duration    String?
-  imageURL    String
-  slug        String  @unique @db.VarChar(255)
-
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  savedRecipes SavedRecipe[]
-  categories   CategoryRecipe[]
-  ingredients  Ingredient[]
-  instructions Instruction[]
-}
-
-model Category {
-  id              String           @id @default(cuid())
-  category        String
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  categoryRecipes CategoryRecipe[]
-}
-
-model CategoryRecipe {
-  id         String   @id @default(cuid())
-  recipeId   String
-  recipes    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  categoryId String
-  categories Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
-model Ingredient {
-  id          String   @id @default(cuid())
-  recipeId    String
-  recipes     Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  name        String
-  quantity    Int
-  measurement String
-  sequence    Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
-}
-
-model Instruction {
-  id        String   @id @default(cuid())
-  recipeId  String
-  recipes   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  text      String
-  sequence  Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
 }
