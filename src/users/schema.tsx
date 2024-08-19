@@ -5,10 +5,10 @@ export const QueryUserSchema = z.object({
 });
 
 export const DetailUserSchema = z.object({
-  username: z.string().min(1).openapi({ example: "sidiq99" }),
+  username: z.string().min(1),
 });
 
 export const UserSchema = z.object({
-  fullname: z.string().optional(),
-  email: z.string().optional(),
+  fullname: z.string().min(1),
+  email: z.string().min(1),
 });
