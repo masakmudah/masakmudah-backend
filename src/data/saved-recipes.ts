@@ -1,12 +1,12 @@
 export const savedRecipes = [
   {
-    id: "saved-recipe-1",
-    recipeId: "recipe-3",
-    userId: "user-1",
+    id: "rm5sdfjddwricw8gjnewww4h",
+    recipeId: "xlltcvjp1n2ehpddgf0vbajd",
+    userId: "f58ch2o6z749s7wj4cwbc7jg",
   },
   {
-    id: "saved-recipe-2",
-    recipeId: "recipe-4",
-    userId: "user-2",
+    id: "ick01hktoaaoklv57hok3alo",
+    recipeId: "mqc8by4941kbxipuldyu1ymz",
+    userId: "spfilbroj5xoa0aoghyh5t40",
   },
 ];

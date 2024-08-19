@@ -1,18 +1,18 @@
 export const categories = [
   {
-    id: "cat-1",
+    id: "uuflc5ng06nqxge861rtpq4s",
     category: "Ayam",
   },
   {
-    id: "cat-2",
+    id: "p6yns61e0huccchmlmlunfru",
     category: "Sayuran",
   },
   {
-    id: "cat-3",
+    id: "yr5e4f13eiojzi0vpd8yth2w",
     category: "Sapi",
   },
   {
-    id: "cat-4",
+    id: "br468pj8zcng7utn2pyhzuta",
     category: "Seafood",
   },
 ];

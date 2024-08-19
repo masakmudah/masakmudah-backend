@@ -1,12 +1,12 @@
 export const categoryRecipes = [
   {
-    id: "cat-recipe-1",
-    recipeId: "recipe-1",
-    categoryId: "cat-1",
+    id: "zls3q06fls5l1viq4ae8ig0t",
+    recipeId: "ksx12anz5kkwx663disf08kv",
+    categoryId: "uuflc5ng06nqxge861rtpq4s",
   },
   {
-    id: "cat-recipe-2",
-    recipeId: "recipe-1",
-    categoryId: "cat-2",
+    id: "cws6m10590scr6up19mp1vt5",
+    recipeId: "ksx12anz5kkwx663disf08kv",
+    categoryId: "p6yns61e0huccchmlmlunfru",
   },
 ];
