@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const QueryUserSchema = z.object({
-  search: z.string().optional(),
+  q: z.string().optional(),
 });
 
 export const DetailUserSchema = z.object({

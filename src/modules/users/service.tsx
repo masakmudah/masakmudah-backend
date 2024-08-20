@@ -27,13 +27,13 @@ export async function getAll(query: z.infer<typeof QueryUserSchema>) {
       OR: [
         {
           username: {
-            contains: query?.search,
+            contains: query?.q,
             mode: "insensitive",
           },
         },
         {
           email: {
-            contains: query?.search,
+            contains: query?.q,
             mode: "insensitive",
           },
         },
