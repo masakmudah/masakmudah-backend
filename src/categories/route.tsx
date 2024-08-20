@@ -4,6 +4,7 @@ import {
   QueryCategorySchema,
   DetailCategorySchema,
   CategorySchema,
+  CategoryByIdSchema,
 } from "./schema";
 import { z } from "zod";
 
@@ -42,10 +43,43 @@ categoriesRoute.openapi(
 categoriesRoute.openapi(
   {
     method: "get",
+    path: "/{category}",
+    description: "Get detail category by category ",
+    request: {
+      params: CategorySchema,
+    },
+    responses: {
+      200: {
+        description: "Successfully get category",
+      },
+      404: {
+        description: "category not found",
+      },
+    },
+    tags: API_TAG,
+  },
+  async (c) => {
+    const categoryParam = c.req.param("category")!;
+    const data = await categoryService.get(categoryParam);
+
+    if (!data) {
+      return c.json({ message: "Category not found" }, 404);
+    }
+
+    return c.json({
+      message: "Susscessfully get category detail",
+      data,
+    });
+  }
+);
+
+categoriesRoute.openapi(
+  {
+    method: "get",
     path: "/{id}",
     description: "Get detail category by id ",
     request: {
-      params: DetailCategorySchema,
+      params: CategoryByIdSchema,
     },
     responses: {
       200: {
@@ -81,7 +115,7 @@ categoriesRoute.openapi(
       body: {
         content: {
           "application/json": {
-            schema: CategorySchema,
+            schema: CategoryByIdSchema,
           },
         },
       },
@@ -121,7 +155,7 @@ categoriesRoute.openapi(
     path: "/{id}",
     description: "Delete detail category by id ",
     request: {
-      params: DetailCategorySchema,
+      params: CategoryByIdSchema,
     },
     responses: {
       200: {
@@ -143,7 +177,7 @@ categoriesRoute.openapi(
     const result = await categoryService.deleteCategory(data.id);
 
     return c.json({
-      message: "Susscessfully delete user",
+      message: "Susscessfully delete category",
       result,
     });
   }

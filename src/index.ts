@@ -6,7 +6,7 @@ import { registerRoute } from "./routes/register";
 import { usersRoute } from "./users/route";
 import { loginRoute } from "./routes/login";
 import { recipesRoute } from "./recipes/route";
-import { categories } from "./routes/categories";
+import { categoriesRoute } from "./categories/route";
 
 type Bindings = {
   TOKEN: string;
@@ -62,7 +62,7 @@ app.route("/auth/login", loginRoute);
 app.route("/auth/register", registerRoute);
 app.route("/users", usersRoute);
 app.route("/recipes", recipesRoute);
-app.route("/categories", categories);
+app.route("/categories", categoriesRoute);
 
 // SWAGGER UI
 app.get("/ui", swaggerUI({ url: "/api-spec" }));
