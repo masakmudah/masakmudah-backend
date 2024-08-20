@@ -3,7 +3,7 @@ import * as categoryService from "./service";
 import {
   QueryCategorySchema,
   DetailCategorySchema,
-  CategorySchema,
+  CategorySlugSchema,
   CategoryByIdSchema,
 } from "./schema";
 import { z } from "zod";
@@ -43,10 +43,10 @@ categoriesRoute.openapi(
 categoriesRoute.openapi(
   {
     method: "get",
-    path: "/{category}",
-    description: "Get detail category by category ",
+    path: "/{categorySlug}",
+    description: "Get detail category by categorySlug ",
     request: {
-      params: CategorySchema,
+      params: CategorySlugSchema,
     },
     responses: {
       200: {

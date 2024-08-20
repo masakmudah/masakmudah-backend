@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { QueryRecipeSchema, SearchByCategorySchema } from "./schema";
+import { QueryRecipeSchema, RecipeByCategorySlugSchema } from "./schema";
 import { prisma } from "../../lib/prisma";
 
 export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
+  const qParam = query?.q === undefined ? "" : query?.q;
   const allRecipes = await prisma.recipe.findMany({
     select: {
       id: true,
@@ -11,43 +12,9 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
       description: true,
       imageURL: true,
       duration: true,
-      ingredients: {
-        select: {
-          id: true,
-          quantity: true,
-          measurement: true,
-          name: true,
-          sequence: true,
-        },
-        orderBy: {
-          sequence: "asc",
-        },
-      },
-      instructions: {
-        select: {
-          id: true,
-          text: true,
-          sequence: true,
-        },
-        orderBy: {
-          sequence: "asc",
-        },
-      },
-      categories: {
-        select: {
-          categories: {
-            select: {
-              id: true,
-              category: true,
-            },
-          },
-        },
-        orderBy: {
-          categories: {
-            category: "asc",
-          },
-        },
-      },
+      ingredientItems: true,
+      instructions: true,
+      categories: true,
       user: {
         select: {
           id: true,
@@ -63,28 +30,8 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
       OR: [
         {
           name: {
-            contains: query?.search,
+            contains: qParam,
             mode: "insensitive",
-          },
-        },
-        {
-          ingredients: {
-            some: {
-              name: {
-                contains: query?.search,
-                mode: "insensitive",
-              },
-            },
-          },
-        },
-        {
-          instructions: {
-            some: {
-              text: {
-                contains: query?.search,
-                mode: "insensitive",
-              },
-            },
           },
         },
       ],
@@ -97,12 +44,12 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
   return allRecipes;
 }
 
-export async function getAllByCategoryId(
-  query: z.infer<typeof SearchByCategorySchema>
+export async function getAllByCategorySlug(
+  query: z.infer<typeof RecipeByCategorySlugSchema>
 ) {
-  let categoryIds: string[] = [];
-  if (query?.categoryId !== null) {
-    categoryIds.push(query?.categoryId);
+  let categorySlugs: string[] = [];
+  if (query?.categorySlug !== null) {
+    categorySlugs.push(query?.categorySlug);
   }
 
   const allRecipes = await prisma.recipe.findMany({
@@ -113,43 +60,9 @@ export async function getAllByCategoryId(
       description: true,
       imageURL: true,
       duration: true,
-      ingredients: {
-        select: {
-          id: true,
-          quantity: true,
-          measurement: true,
-          name: true,
-          sequence: true,
-        },
-        orderBy: {
-          sequence: "asc",
-        },
-      },
-      instructions: {
-        select: {
-          id: true,
-          text: true,
-          sequence: true,
-        },
-        orderBy: {
-          sequence: "asc",
-        },
-      },
-      categories: {
-        select: {
-          categories: {
-            select: {
-              id: true,
-              category: true,
-            },
-          },
-        },
-        orderBy: {
-          categories: {
-            category: "asc",
-          },
-        },
-      },
+      ingredientItems: true,
+      instructions: true,
+      categories: true,
       user: {
         select: {
           id: true,
@@ -162,9 +75,7 @@ export async function getAllByCategoryId(
       updatedAt: true,
     },
     where: {
-      categories: {
-        some: { categoryId: { in: categoryIds } },
-      },
+      categories: { slug: { in: categorySlugs } },
     },
     orderBy: {
       name: "asc",
@@ -186,43 +97,9 @@ export async function get(slugParam: string) {
       description: true,
       imageURL: true,
       duration: true,
-      ingredients: {
-        select: {
-          id: true,
-          name: true,
-          measurement: true,
-          quantity: true,
-          sequence: true,
-        },
-        orderBy: {
-          sequence: "asc",
-        },
-      },
-      instructions: {
-        select: {
-          id: true,
-          text: true,
-          sequence: true,
-        },
-        orderBy: {
-          sequence: "asc",
-        },
-      },
-      categories: {
-        select: {
-          categories: {
-            select: {
-              id: true,
-              category: true,
-            },
-          },
-        },
-        orderBy: {
-          categories: {
-            category: "asc",
-          },
-        },
-      },
+      ingredientItems: true,
+      instructions: true,
+      categories: true,
       user: {
         select: {
           id: true,

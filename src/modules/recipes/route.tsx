@@ -2,7 +2,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import * as recipeService from "./service";
 import {
   QueryRecipeSchema,
-  SearchByCategorySchema,
+  RecipeByCategorySlugSchema,
   DetailRecipeSchema,
 } from "./schema";
 import { z } from "zod";
@@ -42,10 +42,10 @@ recipesRoute.openapi(
 recipesRoute.openapi(
   {
     method: "get",
-    path: "/category",
+    path: "/category/{categorySlug}",
     description: "Get all recipes by categoryId",
     request: {
-      query: SearchByCategorySchema,
+      query: RecipeByCategorySlugSchema,
     },
     responses: {
       200: {
@@ -55,8 +55,8 @@ recipesRoute.openapi(
     tags: API_TAG,
   },
   async (c) => {
-    const data = await recipeService.getAllByCategoryId(
-      c.req.query() as z.infer<typeof SearchByCategorySchema>
+    const data = await recipeService.getAllByCategorySlug(
+      c.req.query() as z.infer<typeof RecipeByCategorySlugSchema>
     );
 
     return c.json({

@@ -11,10 +11,10 @@ export async function getAll(q: z.infer<typeof QueryCategorySchema>) {
     return await prisma.category.findMany({
       select: {
         id: true,
-        category: true,
+        name: true,
         createdAt: true,
         updatedAt: true,
-        categoryRecipes: true,
+        recipes: true,
       },
     });
   }
@@ -22,36 +22,36 @@ export async function getAll(q: z.infer<typeof QueryCategorySchema>) {
   return await prisma.category.findMany({
     select: {
       id: true,
-      category: true,
+      name: true,
       createdAt: true,
       updatedAt: true,
-      categoryRecipes: true,
+      recipes: true,
     },
     where: {
       OR: [
         {
-          category: {
-            contains: q?.search,
+          name: {
+            contains: q?.q,
             mode: "insensitive",
           },
         },
       ],
     },
     orderBy: {
-      category: "asc",
+      name: "asc",
     },
   });
 }
 
-export async function getCategory(category: string) {
+export async function getCategory(categorySlug: string) {
   const categoryParam = await prisma.category.findFirst({
-    where: { category },
+    where: { slug: categorySlug },
     select: {
       id: true,
-      category: true,
+      name: true,
       createdAt: true,
       updatedAt: true,
-      categoryRecipes: true,
+      recipes: true,
     },
   });
 
@@ -63,10 +63,10 @@ export async function getCategoryById(id: string) {
     where: { id: id },
     select: {
       id: true,
-      category: true,
+      name: true,
       createdAt: true,
       updatedAt: true,
-      categoryRecipes: true,
+      recipes: true,
     },
   });
 
@@ -88,7 +88,7 @@ export async function updateCategory(
   return await prisma.category.update({
     where: { id },
     data: {
-      category: body.category,
+      name: body.name,
     },
   });
 }
