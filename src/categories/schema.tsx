@@ -13,5 +13,5 @@ export const CategorySchema = z.object({
 });
 
 export const CategoryByIdSchema = z.object({
-  categoryId: z.string().min(1),
+  id: z.string().min(1),
 });

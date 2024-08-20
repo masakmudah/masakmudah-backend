@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { QueryCategorySchema, CategorySchema } from "./schema";
+import {
+  QueryCategorySchema,
+  CategorySchema,
+  CategoryByIdSchema,
+} from "./schema";
 import { prisma } from "../lib/prisma";
 
 export async function getAll(q: z.infer<typeof QueryCategorySchema>) {
@@ -39,8 +43,23 @@ export async function getAll(q: z.infer<typeof QueryCategorySchema>) {
   });
 }
 
-export async function get(id: string) {
-  const category = await prisma.category.findFirst({
+export async function getCategory(category: string) {
+  const categoryParam = await prisma.category.findFirst({
+    where: { category },
+    select: {
+      id: true,
+      category: true,
+      createdAt: true,
+      updatedAt: true,
+      categoryRecipes: true,
+    },
+  });
+
+  return categoryParam;
+}
+
+export async function getCategoryById(id: string) {
+  const categoryById = await prisma.category.findUnique({
     where: { id: id },
     select: {
       id: true,
@@ -51,7 +70,7 @@ export async function get(id: string) {
     },
   });
 
-  return category;
+  return categoryById;
 }
 
 export async function deleteCategory(id: string) {
@@ -67,7 +86,7 @@ export async function updateCategory(
   body: z.infer<typeof CategorySchema>
 ) {
   return await prisma.category.update({
-    where: { id: id },
+    where: { id },
     data: {
       category: body.category,
     },

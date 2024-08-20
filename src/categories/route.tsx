@@ -60,7 +60,7 @@ categoriesRoute.openapi(
   },
   async (c) => {
     const categoryParam = c.req.param("category")!;
-    const data = await categoryService.get(categoryParam);
+    const data = await categoryService.getCategory(categoryParam);
 
     if (!data) {
       return c.json({ message: "Category not found" }, 404);
@@ -93,7 +93,7 @@ categoriesRoute.openapi(
   },
   async (c) => {
     const idParam = c.req.param("id")!;
-    const data = await categoryService.get(idParam);
+    const data = await categoryService.getCategoryById(idParam);
 
     if (!data) {
       return c.json({ message: "Category not found" }, 404);
@@ -134,7 +134,7 @@ categoriesRoute.openapi(
     const idParam = c.req.param("id")!;
     const body = await c.req.json();
 
-    const data = await categoryService.get(idParam);
+    const data = await categoryService.getCategoryById(idParam);
 
     if (!data) {
       return c.json({ message: "Category not found" }, 404);
@@ -169,7 +169,7 @@ categoriesRoute.openapi(
   },
   async (c) => {
     const idParam = c.req.param("id")!;
-    const data = await categoryService.get(idParam);
+    const data = await categoryService.getCategoryById(idParam);
     if (!data) {
       return c.json({ message: "Category not found" }, 404);
     }
