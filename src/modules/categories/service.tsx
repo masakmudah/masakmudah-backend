@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  QueryCategorySchema,
-  CategorySchema,
-  CategoryByIdSchema,
-} from "./schema";
+import { CategorySchema, QueryCategorySchema } from "./schema";
 import { prisma } from "../../lib/prisma";
 
 export async function getAll(q: z.infer<typeof QueryCategorySchema>) {
@@ -92,3 +88,21 @@ export async function updateCategory(
     },
   });
 }
+
+export const create = async (body: z.infer<typeof CategorySchema>) => {
+  try {
+    const { name } = body;
+    const { slug } = body;
+
+    const newCategory = await prisma.category.create({
+      data: {
+        name,
+        slug,
+      },
+    });
+    return newCategory;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

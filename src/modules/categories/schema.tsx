@@ -7,6 +7,10 @@ export const QueryCategorySchema = z.object({
 export const DetailCategorySchema = z.object({
   name: z.string().min(1),
 });
+export const CategorySchema = z.object({
+  name: z.string().min(5).openapi({ example: "chiken" }),
+  slug: z.string().min(1).openapi({ example: "daging" }),
+});
 
 export const CategorySlugSchema = z.object({
   categorySlug: z.string().min(1),

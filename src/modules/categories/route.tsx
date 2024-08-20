@@ -5,12 +5,25 @@ import {
   DetailCategorySchema,
   CategorySlugSchema,
   CategoryByIdSchema,
+  CategorySchema,
 } from "./schema";
 import { z } from "zod";
+import { checkUserToken } from "../../midleware/check-user-token";
 
 const API_TAG = ["Categories"];
 
 const categoriesRoute = new OpenAPIHono();
+
+categoriesRoute.openAPIRegistry.registerComponent(
+  "securitySchemes",
+  "AuthorizationBearer",
+  {
+    type: "http",
+    scheme: "bearer",
+    in: "header",
+    description: "Bearer token",
+  }
+);
 
 // GET ALL CATEGORIES
 categoriesRoute.openapi(
@@ -183,4 +196,45 @@ categoriesRoute.openapi(
   }
 );
 
+categoriesRoute.openapi(
+  {
+    method: "post",
+    path: "/",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: CategorySchema,
+          },
+        },
+      },
+    },
+    description: "Create new category",
+    responses: {
+      201: {
+        description: "Successfully create new category.",
+      },
+    },
+    tags: API_TAG,
+  },
+  async (c) => {
+    const body: z.infer<typeof CategorySchema> = await c.req.json();
+    const newCategory = await categoryService.create(body);
+
+    return c.json(
+      {
+        code: 201,
+        status: "success",
+        newCategory,
+      },
+      201
+    );
+  }
+);
 export { categoriesRoute };
