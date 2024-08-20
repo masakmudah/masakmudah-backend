@@ -3,11 +3,10 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
 
 import { registerRoute } from "./routes/register";
-import { loginRoute } from "./routes/login";
-
 import { usersRoute } from "./modules/users/route";
+import { loginRoute } from "./routes/login";
 import { recipesRoute } from "./modules/recipes/route";
-import { categories } from "./routes/categories";
+import { categoriesRoute } from "./modules/categories/route";
 
 type Bindings = {
   TOKEN: string;
@@ -63,7 +62,7 @@ app.route("/auth/login", loginRoute);
 app.route("/auth/register", registerRoute);
 app.route("/users", usersRoute);
 app.route("/recipes", recipesRoute);
-app.route("/categories", categories);
+app.route("/categories", categoriesRoute);
 
 // SWAGGER UI
 app.get("/ui", swaggerUI({ url: "/doc" }));
