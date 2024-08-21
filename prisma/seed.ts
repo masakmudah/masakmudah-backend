@@ -1,14 +1,11 @@
-import { categoryRecipes } from "./data/category-recipes";
-import { categories } from "./data/categories";
 import { recipes } from "./data/recipes";
-import { ingredients } from "./data/ingredients";
-import { instructions } from "./data/instructions";
-import { savedRecipes } from "./data/saved-recipes";
 import { users } from "./data/users";
 import { prisma } from "../src/lib/prisma";
 import { hashPassword } from "../src/lib/password";
+import { generateUniqueSlug } from "../src/utils/generate-slug";
 
 async function seed() {
+  // Seeding user data
   for (let user of users) {
     const newUser = await prisma.user.upsert({
       where: {
@@ -34,78 +31,57 @@ async function seed() {
 
     console.log(`User with id ${newUser.id} created`);
   }
+
+  // Seeding recipe data
   for (let recipe of recipes) {
-    const newRecipesSeed = await prisma.recipe.upsert({
-      where: {
-        slug: recipe.slug, // Menggunakan slug sebagai nilai unik
-      },
-      update: recipe,
-      create: recipe,
-    });
-    console.log(`Recipe : ${newRecipesSeed.slug}`);
-  }
+    const recipeSlug = await generateUniqueSlug(recipe.name);
 
-  for (let category of categories) {
-    const newCategoriesSeed = await prisma.category.upsert({
-      where: {
-        id: category.id, // Menggunakan id sebagai nilai unik
-      },
-      update: category,
-      create: category,
-    });
-    console.log(`Category : ${newCategoriesSeed.category}`);
-  }
-
-  for (let catRecipe of categoryRecipes) {
-    const newCatRecipesSeed = await prisma.categoryRecipe.upsert({
-      where: {
-        id: catRecipe.id, // Menggunakan id sebagai nilai unik
-      },
-      update: catRecipe,
-      create: catRecipe,
-    });
-    console.log(
-      `Category Recipe : ${newCatRecipesSeed.categoryId} for ${newCatRecipesSeed.recipeId}`
+    const ingredientItems = await Promise.all(
+      recipe.ingredientItems.map(async (ingredientItem) => ({
+        quantity: ingredientItem.quantity,
+        measurement: ingredientItem.measurement,
+        sequence: ingredientItem.sequence,
+        ingredient: {
+          connectOrCreate: {
+            where: {
+              slug: ingredientItem.ingredient.slug,
+            },
+            create: {
+              name: ingredientItem.ingredient.name,
+              slug: ingredientItem.ingredient.slug,
+            },
+          },
+        },
+      }))
     );
-  }
 
-  for (let ingredient of ingredients) {
-    const newIngredientSeed = await prisma.ingredient.upsert({
+    const newRecipe = await prisma.recipe.upsert({
       where: {
-        id: ingredient.id, // Menggunakan id sebagai nilai unik
+        id: recipe.id,
       },
-      update: ingredient,
-      create: ingredient,
+      update: {
+        name: recipe.name,
+        description: recipe.description,
+        imageURL: recipe.imageURL,
+        cookingTime: recipe.cookingTime,
+        userId: recipe.userId,
+        slug: recipeSlug,
+      },
+      create: {
+        name: recipe.name,
+        description: recipe.description,
+        imageURL: recipe.imageURL,
+        cookingTime: recipe.cookingTime,
+        userId: recipe.userId,
+        slug: recipeSlug,
+        instructions: "json",
+        ingredientItems: {
+          create: ingredientItems,
+        },
+      },
     });
-    console.log(
-      `New ingredient : ${ingredient.quantity} ${ingredient.measurement} ${ingredient.name} `
-    );
-  }
 
-  for (let instruction of instructions) {
-    const newInstructionSeed = await prisma.instruction.upsert({
-      where: {
-        id: instruction.id, // Menggunakan id sebagai nilai unik
-      },
-      update: instruction,
-      create: instruction,
-    });
-    console.log(
-      `New instruction : ${instruction.recipeId} ${instruction.text}`
-    );
-  }
-
-  for (let savedRecipe of savedRecipes) {
-    const newSavedRecipeSeed = await prisma.savedRecipe.upsert({
-      where: {
-        id: savedRecipe.id, // Menggunakan id sebagai nilai unik
-      },
-      update: savedRecipe,
-      create: savedRecipe,
-    });
-    console.log(
-      `Category Recipe : ${newSavedRecipeSeed.recipeId} for ${newSavedRecipeSeed.userId}`
-    );
+    console.log("Recipe created", newRecipe);
   }
 }
 

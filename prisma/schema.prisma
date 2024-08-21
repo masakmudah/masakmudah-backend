@@ -30,7 +30,7 @@ model Ingredient {
   id String @id @default(cuid())
 
   name String
-  slug String @unique @default("")
+  slug String @unique
 
   ingredientItems IngredientItem[]
 
@@ -41,14 +41,18 @@ model Ingredient {
 model IngredientItem {
   id String @id @default(cuid())
 
-  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
   ingredientId String
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  recipeId String
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
   quantity    Int
   measurement String
   sequence    Int    @default(0)
 
-  recipes Recipe[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Recipe {
@@ -60,8 +64,8 @@ model Recipe {
   imageURL    String
   slug        String  @unique @db.VarChar(255)
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   categories      Category[]
   ingredientItems IngredientItem[]
@@ -76,7 +80,7 @@ model Category {
   id String @id @default(cuid())
 
   name    String
-  slug    String
+  slug    String   @unique
   recipes Recipe[]
 
   createdAt DateTime @default(now())
@@ -84,11 +88,14 @@ model Category {
 }
 
 model SavedRecipe {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  recipeId  String
-  recipes   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  recipeId String
+  recipes  Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
