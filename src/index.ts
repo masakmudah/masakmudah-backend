@@ -59,7 +59,6 @@ app.get("/", (c) => {
 });
 
 app.route("/auth", authRoute);
-app.route("/auth/register", registerRoute);
 app.route("/users", usersRoute);
 app.route("/recipes", recipesRoute);
 app.route("/categories", categoriesRoute);
