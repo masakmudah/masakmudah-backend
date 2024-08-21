@@ -58,7 +58,7 @@ app.get("/", (c) => {
   });
 });
 
-app.route("/auth/login", authRoute);
+app.route("/auth", authRoute);
 app.route("/auth/register", registerRoute);
 app.route("/users", usersRoute);
 app.route("/recipes", recipesRoute);
