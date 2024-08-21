@@ -120,16 +120,11 @@ export async function get(slugParam: string) {
   return recipe;
 }
 
-export const create = async (body: z.infer<typeof CreateRecipeSchema>) => {
-  try {
-    const newRecipe = await prisma.recipe.create({
-      data: {
-        ...body,
-      },
-    });
-    return newRecipe;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+export async function create(body: z.infer<typeof CreateRecipeSchema>) {
+  const newRecipe = await prisma.recipe.create({
+    data: {
+      ...body,
+    },
+  });
+  return newRecipe;
+}

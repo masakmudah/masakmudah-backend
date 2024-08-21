@@ -27,5 +27,4 @@ export const CreateRecipeSchema = z.object({
     .min(5)
     .openapi({ example: "http://localhost/image/cahkangkung.png" }),
   instructions: z.string(),
-  userId: z.string().openapi({ example: "fe5unxwewzzm0klnic56g1wn" }),
 });

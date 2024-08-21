@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { LoginSchema, RegisterSchema } from "./auth-schema";
 import { prisma } from "../../lib/prisma";
-import { verifyPassword } from "../../lib/password";
+import { hashPassword, verifyPassword } from "../../lib/password";
 import { createToken } from "../../lib/jwt";
 
 export async function register(body: z.infer<typeof RegisterSchema>) {
@@ -46,7 +46,4 @@ export async function login(body: z.infer<typeof LoginSchema>) {
   }
 
   return await createToken(user.id);
-}
-function hashPassword(password: string): any {
-  throw new Error("Function not implemented.");
 }
