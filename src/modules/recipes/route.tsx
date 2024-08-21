@@ -13,6 +13,17 @@ const API_TAG = ["Recipes"];
 
 const recipesRoute = new OpenAPIHono();
 
+recipesRoute.openAPIRegistry.registerComponent(
+  "securitySchemes",
+  "AuthorizationBearer",
+  {
+    type: "http",
+    scheme: "bearer",
+    in: "header",
+    description: "Bearer token",
+  }
+);
+
 // GET ALL RECIPES
 recipesRoute.openapi(
   {
