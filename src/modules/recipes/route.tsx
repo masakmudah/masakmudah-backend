@@ -4,8 +4,10 @@ import {
   QueryRecipeSchema,
   RecipeByCategorySlugSchema,
   DetailRecipeSchema,
+  CreateRecipeSchema,
 } from "./schema";
 import { z } from "zod";
+import { checkUserToken } from "../../midleware/check-user-token";
 
 const API_TAG = ["Recipes"];
 
@@ -39,6 +41,7 @@ recipesRoute.openapi(
   }
 );
 
+//GET Category Slug
 recipesRoute.openapi(
   {
     method: "get",
@@ -66,6 +69,7 @@ recipesRoute.openapi(
   }
 );
 
+//GET slug
 recipesRoute.openapi(
   {
     method: "get",
@@ -96,6 +100,50 @@ recipesRoute.openapi(
       message: "Susscessfully get recipe detail",
       data,
     });
+  }
+);
+
+//POST create recipe
+
+recipesRoute.openapi(
+  {
+    method: "post",
+    path: "/",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: CreateRecipeSchema,
+          },
+        },
+      },
+    },
+    description: "Create new recipe",
+    responses: {
+      201: {
+        description: "Successfully create new recipe.",
+      },
+    },
+    tags: API_TAG,
+  },
+  async (c) => {
+    const body: z.infer<typeof CreateRecipeSchema> = await c.req.json();
+    const newRecipe = await recipeService.create(body);
+
+    return c.json(
+      {
+        code: 201,
+        status: "success",
+        newRecipe,
+      },
+      201
+    );
   }
 );
 

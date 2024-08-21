@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { QueryRecipeSchema, RecipeByCategorySlugSchema } from "./schema";
+import {
+  CreateRecipeSchema,
+  QueryRecipeSchema,
+  RecipeByCategorySlugSchema,
+} from "./schema";
 import { prisma } from "../../lib/prisma";
 
 export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
@@ -115,3 +119,17 @@ export async function get(slugParam: string) {
 
   return recipe;
 }
+
+export const create = async (body: z.infer<typeof CreateRecipeSchema>) => {
+  try {
+    const newRecipe = await prisma.recipe.create({
+      data: {
+        ...body,
+      },
+    });
+    return newRecipe;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
