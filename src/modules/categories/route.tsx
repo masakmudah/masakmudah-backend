@@ -123,6 +123,12 @@ categoriesRoute.openapi(
   {
     method: "put",
     path: "/{id}",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
     description: "Update category by id ",
     request: {
       body: {
@@ -166,6 +172,12 @@ categoriesRoute.openapi(
   {
     method: "delete",
     path: "/{id}",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
     description: "Delete detail category by id ",
     request: {
       params: CategoryByIdSchema,
