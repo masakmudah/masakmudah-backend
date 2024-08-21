@@ -56,7 +56,7 @@ model Recipe {
 
   name        String
   description String
-  duration    String?
+  cookingTime String?
   imageURL    String
   slug        String  @unique @db.VarChar(255)
 
