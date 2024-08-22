@@ -1,3 +1,6 @@
+import { generateRandomCategoryIds } from "../../src/utils/generate-random-categoryIds";
+import { categories } from "./categories";
+
 export const recipes = [
   {
     id: "ksx12anz5kkwx663disf08kv",
@@ -54,6 +57,21 @@ export const recipes = [
         },
       },
     ],
+    instructions: [
+      {
+        step: 1,
+        description:
+          "Panaskan minyak, tumis bawang putih dan bawang merah hingga harum.",
+      },
+      { step: 2, description: "Masukkan telur, orak-arik hingga matang." },
+      { step: 3, description: "Tambahkan nasi putih, aduk rata." },
+      { step: 4, description: "Tuangkan kecap manis, aduk hingga merata." },
+      {
+        step: 5,
+        description: "Sajikan nasi goreng dengan pelengkap sesuai selera.",
+      },
+    ],
+    categoryIds: generateRandomCategoryIds(categories),
   },
   {
     id: "fe5unxwewzzm0klnic56g1wn",
@@ -110,6 +128,22 @@ export const recipes = [
         },
       },
     ],
+    instructions: [
+      {
+        step: 1,
+        description: "Potong daging ayam, tusuk dengan tusukan sate.",
+      },
+      {
+        step: 2,
+        description: "Haluskan kacang tanah, bawang putih, dan bumbu lainnya.",
+      },
+      {
+        step: 3,
+        description: "Olesi sate dengan bumbu kacang, bakar hingga matang.",
+      },
+      { step: 4, description: "Sajikan sate ayam dengan bumbu kacang." },
+    ],
+    categoryIds: generateRandomCategoryIds(categories),
   },
   {
     id: "xlltcvjp1n2ehpddgf0vbajd",
@@ -166,6 +200,24 @@ export const recipes = [
         },
       },
     ],
+    instructions: [
+      { step: 1, description: "Potong daging sapi sesuai selera." },
+      { step: 2, description: "Tumis bumbu halus hingga harum." },
+      {
+        step: 3,
+        description: "Masukkan daging sapi, aduk hingga berubah warna.",
+      },
+      {
+        step: 4,
+        description: "Tambahkan santan, masak dengan api kecil hingga meresap.",
+      },
+      {
+        step: 5,
+        description:
+          "Masak hingga rendang mengering dan bumbu meresap sempurna.",
+      },
+    ],
+    categoryIds: generateRandomCategoryIds(categories),
   },
   {
     id: "mqc8by4941kbxipuldyu1ymz",
@@ -222,6 +274,19 @@ export const recipes = [
         },
       },
     ],
+    instructions: [
+      { step: 1, description: "Rebus semua sayuran hingga matang." },
+      {
+        step: 2,
+        description: "Haluskan kacang tanah, bawang putih, dan bumbu lainnya.",
+      },
+      { step: 3, description: "Campur sayuran dengan saus kacang." },
+      {
+        step: 4,
+        description: "Sajikan gado-gado dengan pelengkap sesuai selera.",
+      },
+    ],
+    categoryIds: generateRandomCategoryIds(categories),
   },
   {
     id: "em88a3piv8cpot3erhjod3wk",
@@ -278,6 +343,20 @@ export const recipes = [
         },
       },
     ],
+    instructions: [
+      {
+        step: 1,
+        description:
+          "Campur daging sapi giling dengan tepung tapioka dan bumbu.",
+      },
+      { step: 2, description: "Bentuk adonan menjadi bola-bola bakso." },
+      { step: 3, description: "Rebus bakso hingga mengapung." },
+      {
+        step: 4,
+        description: "Sajikan bakso dengan kuah kaldu dan pelengkap.",
+      },
+    ],
+    categoryIds: generateRandomCategoryIds(categories),
   },
   {
     id: "dauk8w2d7e78av47l0xkgrng",
@@ -334,6 +413,20 @@ export const recipes = [
         },
       },
     ],
+    instructions: [
+      { step: 1, description: "Rebus mie telur hingga matang, tiriskan." },
+      {
+        step: 2,
+        description: "Tumis bawang putih dan bawang merah hingga harum.",
+      },
+      { step: 3, description: "Masukkan telur, orak-arik hingga matang." },
+      { step: 4, description: "Tambahkan sayuran, aduk rata." },
+      {
+        step: 5,
+        description: "Masukkan mie dan kecap manis, aduk hingga merata.",
+      },
+    ],
+    categoryIds: generateRandomCategoryIds(categories),
   },
   {
     id: "vei3oeq8kuoz0aovk2poa3d4",
@@ -390,6 +483,23 @@ export const recipes = [
         },
       },
     ],
+    instructions: [
+      { step: 1, description: "Rebus daging ayam hingga matang, suwir-suwir." },
+      { step: 2, description: "Tumis bumbu halus hingga harum." },
+      {
+        step: 3,
+        description: "Masukkan serai, daun jeruk, dan bumbu lainnya.",
+      },
+      {
+        step: 4,
+        description: "Tambahkan air kaldu ayam, masak hingga mendidih.",
+      },
+      {
+        step: 5,
+        description: "Sajikan soto ayam dengan pelengkap sesuai selera.",
+      },
+    ],
+    categoryIds: generateRandomCategoryIds(categories),
   },
   {
     id: "a7mba5y1hpbsxe3sgto3109c",
@@ -446,6 +556,17 @@ export const recipes = [
         },
       },
     ],
+    instructions: [
+      { step: 1, description: "Bersihkan lele, goreng hingga matang." },
+      {
+        step: 2,
+        description:
+          "Haluskan cabai merah, bawang putih, bawang merah, dan terasi.",
+      },
+      { step: 3, description: "Tumis bumbu halus hingga matang." },
+      { step: 4, description: "Sajikan lele goreng dengan sambal terasi." },
+    ],
+    categoryIds: generateRandomCategoryIds(categories),
   },
   {
     id: "tjwofowa94ghzlhx421utlsf",
@@ -502,6 +623,17 @@ export const recipes = [
         },
       },
     ],
+    instructions: [
+      { step: 1, description: "Potong nangka muda menjadi bagian kecil." },
+      { step: 2, description: "Rebus nangka muda hingga empuk." },
+      { step: 3, description: "Tumis bumbu halus hingga harum." },
+      {
+        step: 4,
+        description: "Masukkan nangka muda dan santan, masak hingga meresap.",
+      },
+      { step: 5, description: "Tambahkan telur rebus, masak sebentar." },
+    ],
+    categoryIds: generateRandomCategoryIds(categories),
   },
   {
     id: "aj5jh2ul890phzetx8ds01u2",
@@ -558,5 +690,19 @@ export const recipes = [
         },
       },
     ],
+    instructions: [
+      { step: 1, description: "Cuci beras hingga bersih." },
+      {
+        step: 2,
+        description: "Rebus santan dengan daun salam, serai, dan garam.",
+      },
+      { step: 3, description: "Masukkan beras, masak hingga santan meresap." },
+      { step: 4, description: "Kukus nasi hingga matang." },
+      {
+        step: 5,
+        description: "Sajikan nasi uduk dengan sambal kacang dan pelengkap.",
+      },
+    ],
+    categoryIds: generateRandomCategoryIds(categories),
   },
 ];

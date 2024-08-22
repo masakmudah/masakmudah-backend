@@ -8,22 +8,24 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  username     String        @unique
-  fullname     String?
-  email        String        @unique
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  password     Password?
+  id        String   @id @default(cuid())
+  username  String   @unique
+  fullname  String?
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  password     Password[]
   savedRecipes SavedRecipe[]
   recipes      Recipe[]
 }
 
 model Password {
-  id     String @id @default(cuid())
-  hash   String
+  id   String @id @default(cuid())
+  hash String
+
+  userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
 }
 
 model Ingredient {
@@ -79,8 +81,9 @@ model Recipe {
 model Category {
   id String @id @default(cuid())
 
-  name    String
-  slug    String   @unique
+  name String
+  slug String @unique
+
   recipes Recipe[]
 
   createdAt DateTime @default(now())
