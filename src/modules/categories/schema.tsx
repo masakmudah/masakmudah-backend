@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { OpenAPIHono } from "@hono/zod-openapi";
 
 export const QueryCategorySchema = z.object({
   q: z.string().optional(),

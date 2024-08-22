@@ -129,42 +129,54 @@ categoriesRoute.openapi(
         AuthorizationBearer: [],
       },
     ],
-    description: "Update category by id ",
     request: {
+      params: CategoryByIdSchema,
       body: {
         content: {
           "application/json": {
-            schema: CategoryByIdSchema,
+            schema: CategorySchema,
           },
         },
       },
     },
+    description: "Update category by id.",
     responses: {
-      200: {
-        description: "Successfully update category",
+      201: {
+        description: "Successfully update category.",
       },
       404: {
-        description: "Category not found",
+        description: "Category not found.",
       },
     },
     tags: API_TAG,
   },
   async (c) => {
-    const idParam = c.req.param("id")!;
-    const body = await c.req.json();
+    const id = c.req.param("id")!;
 
-    const data = await categoryService.getCategoryById(idParam);
+    const categoryById = await categoryService.getCategoryById(id);
 
-    if (!data) {
-      return c.json({ message: "Category not found" }, 404);
+    if (!categoryById) {
+      return c.json(
+        {
+          code: 404,
+          status: "error",
+          message: "Category not found.",
+        },
+        404
+      );
     }
 
-    const result = await categoryService.updateCategory(idParam, body);
+    const body: z.infer<typeof CategorySchema> = await c.req.json();
+    const updatedCategory = await categoryService.updateCategory(id, body);
 
-    return c.json({
-      message: "Susscessfully update category",
-      result,
-    });
+    return c.json(
+      {
+        code: 201,
+        status: "success",
+        updatedCategory,
+      },
+      201
+    );
   }
 );
 
