@@ -1,4 +1,4 @@
-import { generateRandomCategoryIds } from "../../src/utils/genereta-random-category-ids";
+import { generateRandomCategoryIds } from "../../src/utils/genereta-random-categoryIds";
 import { categories } from "./categories";
 
 export const recipes = [
