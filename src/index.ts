@@ -4,7 +4,7 @@ import { cors } from "hono/cors";
 
 import { registerRoute } from "./routes/register";
 import { usersRoute } from "./modules/users/route";
-import { loginRoute } from "./routes/login";
+import { authRoute } from "./modules/auth/auth.route";
 import { recipesRoute } from "./modules/recipes/route";
 import { categoriesRoute } from "./modules/categories/route";
 
@@ -58,8 +58,7 @@ app.get("/", (c) => {
   });
 });
 
-app.route("/auth/login", loginRoute);
-app.route("/auth/register", registerRoute);
+app.route("/auth", authRoute);
 app.route("/users", usersRoute);
 app.route("/recipes", recipesRoute);
 app.route("/categories", categoriesRoute);

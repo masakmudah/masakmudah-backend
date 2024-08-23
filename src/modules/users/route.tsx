@@ -2,10 +2,22 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import * as userService from "./service";
 import { QueryUserSchema, DetailUserSchema, UserSchema } from "./schema";
 import { z } from "zod";
+import { checkUserToken } from "../../midleware/check-user-token";
 
 const API_TAG = ["Users"];
 
 const usersRoute = new OpenAPIHono();
+
+usersRoute.openAPIRegistry.registerComponent(
+  "securitySchemes",
+  "AuthorizationBearer",
+  {
+    type: "http",
+    scheme: "bearer",
+    in: "header",
+    description: "Bearer token",
+  }
+);
 
 // GET ALL USERS
 usersRoute.openapi(
@@ -72,6 +84,14 @@ usersRoute.openapi(
   {
     method: "put",
     path: "/{username}",
+
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
+
     description: "Update user by username ",
     request: {
       body: {
@@ -115,6 +135,12 @@ usersRoute.openapi(
   {
     method: "delete",
     path: "/{username}",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
     description: "Delete detail user by username ",
     request: {
       params: DetailUserSchema,

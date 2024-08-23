@@ -1,10 +1,7 @@
 import { z } from "zod";
-import {
-  QueryCategorySchema,
-  CategorySchema,
-  CategoryByIdSchema,
-} from "./schema";
+import { CategorySchema, QueryCategorySchema } from "./schema";
 import { prisma } from "../../lib/prisma";
+import { OpenAPIHono } from "@hono/zod-openapi";
 
 export async function getAll(q: z.infer<typeof QueryCategorySchema>) {
   if (JSON.stringify(q) === "{}") {
@@ -60,14 +57,7 @@ export async function getCategory(categorySlug: string) {
 
 export async function getCategoryById(id: string) {
   const categoryById = await prisma.category.findUnique({
-    where: { id: id },
-    select: {
-      id: true,
-      name: true,
-      createdAt: true,
-      updatedAt: true,
-      recipes: true,
-    },
+    where: { id },
   });
 
   return categoryById;
@@ -75,7 +65,7 @@ export async function getCategoryById(id: string) {
 
 export async function deleteCategory(id: string) {
   const deleteCategory = await prisma.category.delete({
-    where: { id: id },
+    where: { id },
   });
 
   return deleteCategory;
@@ -85,10 +75,30 @@ export async function updateCategory(
   id: string,
   body: z.infer<typeof CategorySchema>
 ) {
-  return await prisma.category.update({
+  const updateCategory = await prisma.category.update({
     where: { id },
     data: {
       name: body.name,
+      slug: body.slug,
     },
   });
+  return updateCategory;
 }
+
+export const create = async (body: z.infer<typeof CategorySchema>) => {
+  try {
+    const { name } = body;
+    const { slug } = body;
+
+    const newCategory = await prisma.category.create({
+      data: {
+        name,
+        slug,
+      },
+    });
+    return newCategory;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

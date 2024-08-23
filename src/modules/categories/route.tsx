@@ -5,12 +5,25 @@ import {
   DetailCategorySchema,
   CategorySlugSchema,
   CategoryByIdSchema,
+  CategorySchema,
 } from "./schema";
 import { z } from "zod";
+import { checkUserToken } from "../../midleware/check-user-token";
 
 const API_TAG = ["Categories"];
 
 const categoriesRoute = new OpenAPIHono();
+
+categoriesRoute.openAPIRegistry.registerComponent(
+  "securitySchemes",
+  "AuthorizationBearer",
+  {
+    type: "http",
+    scheme: "bearer",
+    in: "header",
+    description: "Bearer token",
+  }
+);
 
 // GET ALL CATEGORIES
 categoriesRoute.openapi(
@@ -110,42 +123,60 @@ categoriesRoute.openapi(
   {
     method: "put",
     path: "/{id}",
-    description: "Update category by id ",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
     request: {
+      params: CategoryByIdSchema,
       body: {
         content: {
           "application/json": {
-            schema: CategoryByIdSchema,
+            schema: CategorySchema,
           },
         },
       },
     },
+    description: "Update category by id.",
     responses: {
-      200: {
-        description: "Successfully update category",
+      201: {
+        description: "Successfully update category.",
       },
       404: {
-        description: "Category not found",
+        description: "Category not found.",
       },
     },
     tags: API_TAG,
   },
   async (c) => {
-    const idParam = c.req.param("id")!;
-    const body = await c.req.json();
+    const id = c.req.param("id")!;
 
-    const data = await categoryService.getCategoryById(idParam);
+    const categoryById = await categoryService.getCategoryById(id);
 
-    if (!data) {
-      return c.json({ message: "Category not found" }, 404);
+    if (!categoryById) {
+      return c.json(
+        {
+          code: 404,
+          status: "error",
+          message: "Category not found.",
+        },
+        404
+      );
     }
 
-    const result = await categoryService.updateCategory(idParam, body);
+    const body: z.infer<typeof CategorySchema> = await c.req.json();
+    const updatedCategory = await categoryService.updateCategory(id, body);
 
-    return c.json({
-      message: "Susscessfully update category",
-      result,
-    });
+    return c.json(
+      {
+        code: 201,
+        status: "success",
+        updatedCategory,
+      },
+      201
+    );
   }
 );
 
@@ -153,6 +184,12 @@ categoriesRoute.openapi(
   {
     method: "delete",
     path: "/{id}",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
     description: "Delete detail category by id ",
     request: {
       params: CategoryByIdSchema,
@@ -183,4 +220,45 @@ categoriesRoute.openapi(
   }
 );
 
+categoriesRoute.openapi(
+  {
+    method: "post",
+    path: "/",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: CategorySchema,
+          },
+        },
+      },
+    },
+    description: "Create new category",
+    responses: {
+      201: {
+        description: "Successfully create new category.",
+      },
+    },
+    tags: API_TAG,
+  },
+  async (c) => {
+    const body: z.infer<typeof CategorySchema> = await c.req.json();
+    const newCategory = await categoryService.create(body);
+
+    return c.json(
+      {
+        code: 201,
+        status: "success",
+        newCategory,
+      },
+      201
+    );
+  }
+);
 export { categoriesRoute };

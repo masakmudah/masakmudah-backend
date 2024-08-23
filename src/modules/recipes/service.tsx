@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { QueryRecipeSchema, RecipeByCategorySlugSchema } from "./schema";
+import {
+  CreateRecipeSchema,
+  QueryRecipeSchema,
+  RecipeByCategorySlugSchema,
+} from "./schema";
 import { prisma } from "../../lib/prisma";
 
 export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
@@ -75,7 +79,11 @@ export async function getAllByCategorySlug(
       updatedAt: true,
     },
     where: {
-      categories: { slug: { in: categorySlugs } },
+      categories: {
+        some: {
+          slug: { in: categorySlugs },
+        },
+      },
     },
     orderBy: {
       name: "asc",
@@ -115,3 +123,44 @@ export async function get(slugParam: string) {
 
   return recipe;
 }
+
+export const create = async (body: z.infer<typeof CreateRecipeSchema>) => {
+  try {
+    const {
+      name,
+      description,
+      slug,
+      imageURL,
+      instructions,
+      duration,
+      userId,
+      categoryId,
+      // ingredients,
+    } = body;
+
+    const newRecipe = await prisma.recipe.create({
+      data: {
+        name,
+        description,
+        slug,
+        imageURL,
+        instructions,
+        duration,
+        user: {
+          connect: { id: userId }, // Ensure the recipe is associated with a user
+        },
+        categories: {
+          connect: { id: categoryId },
+        },
+        // ingredientItems: {
+        //   create: ingredients || [], // Create related ingredient items if provided
+        // },
+      },
+    });
+
+    return newRecipe;
+  } catch (error) {
+    console.error("Error creating recipe:", error);
+    throw error;
+  }
+};
