@@ -68,7 +68,11 @@ export async function getAllByCategorySlug(
       description: true,
       imageURL: true,
       cookingTime: true,
-      ingredientItems: true,
+      ingredientItems: {
+        include: {
+          ingredient: true
+        }
+      },
       instructions: true,
       categories: true,
       user: {
@@ -109,7 +113,11 @@ export async function get(slugParam: string) {
       description: true,
       imageURL: true,
       cookingTime: true,
-      ingredientItems: true,
+      ingredientItems: {
+        include: {
+          ingredient: true
+        }
+      },
       instructions: true,
       categories: true,
       user: {
