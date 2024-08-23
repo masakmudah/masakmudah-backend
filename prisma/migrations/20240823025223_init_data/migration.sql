@@ -4,6 +4,7 @@ CREATE TABLE "User" (
     "username" TEXT NOT NULL,
     "fullname" TEXT,
     "email" TEXT NOT NULL,
+    "imageURL" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -46,7 +47,7 @@ CREATE TABLE "Recipe" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "duration" TEXT,
+    "cookingTime" TEXT,
     "imageURL" TEXT NOT NULL,
     "slug" VARCHAR(255) NOT NULL,
     "userId" TEXT NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE "Recipe" (
 CREATE TABLE "Category" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "slug" TEXT NOT NULL,
+    "slug" TEXT NOT NULL DEFAULT '',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -105,6 +106,9 @@ CREATE UNIQUE INDEX "Ingredient_slug_key" ON "Ingredient"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Recipe_slug_key" ON "Recipe"("slug");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Category_slug_key" ON "Category"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_IngredientItemToRecipe_AB_unique" ON "_IngredientItemToRecipe"("A", "B");

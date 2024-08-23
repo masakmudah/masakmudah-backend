@@ -2,6 +2,7 @@ import { recipes } from "./data/recipes";
 import { users } from "./data/users";
 import { prisma } from "../src/lib/prisma";
 import { hashPassword } from "../src/lib/password";
+import { categories } from "./data/categories";
 import { generateUniqueSlug } from "../src/utils/generate-slug";
 
 async function seed() {
@@ -30,6 +31,24 @@ async function seed() {
     });
 
     console.log(`User with id ${newUser.id} created`);
+  }
+
+  for (let category of categories) {
+    const newCategory = await prisma.category.upsert({
+      where: {
+        id: category.id,
+      },
+      update: {
+        name: category.name,
+      },
+      create: {
+        id: category.id,
+        name: category.name,
+        slug: category.slug,
+      },
+    });
+
+    console.log(newCategory);
   }
 
   // Seeding recipe data
@@ -68,15 +87,21 @@ async function seed() {
         slug: recipeSlug,
       },
       create: {
+        id: recipe.id,
         name: recipe.name,
         description: recipe.description,
         imageURL: recipe.imageURL,
         cookingTime: recipe.cookingTime,
         userId: recipe.userId,
         slug: recipeSlug,
-        instructions: "json",
+        instructions: recipe.instructions,
         ingredientItems: {
           create: ingredientItems,
+        },
+        categories: {
+          connect: recipe.categoryIds.map((categoryId) => ({
+            id: categoryId,
+          })),
         },
       },
     });
