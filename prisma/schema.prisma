@@ -8,31 +8,30 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  username  String   @unique
-  fullname  String?
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  password     Password[]
+  id           String        @id @default(cuid())
+  username     String        @unique
+  fullname     String?
+  email        String        @unique
+  imageURL     String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  password     Password?
   savedRecipes SavedRecipe[]
   recipes      Recipe[]
 }
 
 model Password {
-  id   String @id @default(cuid())
-  hash String
-
-  userId String
+  id     String @id @default(cuid())
+  hash   String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 }
 
 model Ingredient {
   id String @id @default(cuid())
 
   name String
-  slug String @unique
+  slug String @unique @default("")
 
   ingredientItems IngredientItem[]
 
@@ -43,18 +42,14 @@ model Ingredient {
 model IngredientItem {
   id String @id @default(cuid())
 
-  ingredientId String
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
-
-  recipeId String
-  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredientId String
 
   quantity    Int
   measurement String
   sequence    Int    @default(0)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  recipes Recipe[]
 }
 
 model Recipe {
@@ -66,8 +61,8 @@ model Recipe {
   imageURL    String
   slug        String  @unique @db.VarChar(255)
 
-  userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   categories      Category[]
   ingredientItems IngredientItem[]
@@ -81,9 +76,8 @@ model Recipe {
 model Category {
   id String @id @default(cuid())
 
-  name String
-  slug String @unique
-
+  name    String
+  slug    String   @unique @default("")
   recipes Recipe[]
 
   createdAt DateTime @default(now())
@@ -91,14 +85,11 @@ model Category {
 }
 
 model SavedRecipe {
-  id String @id @default(cuid())
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  recipeId String
-  recipes  Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  recipeId  String
+  recipes   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
