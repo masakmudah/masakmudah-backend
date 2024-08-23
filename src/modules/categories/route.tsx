@@ -8,8 +8,7 @@ import {
   CategorySchema,
 } from "./schema";
 import { z } from "zod";
-import { checkUserToken } from "../../midleware/check-user-token";
-
+import { checkUserToken } from "../../middleware/check-user-token";
 const API_TAG = ["Categories"];
 
 const categoriesRoute = new OpenAPIHono();

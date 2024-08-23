@@ -2,7 +2,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import * as userService from "./service";
 import { QueryUserSchema, DetailUserSchema, UserSchema } from "./schema";
 import { z } from "zod";
-import { checkUserToken } from "../../midleware/check-user-token";
+import { checkUserToken } from "../../middleware/check-user-token";
 
 const API_TAG = ["Users"];
 
