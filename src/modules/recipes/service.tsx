@@ -16,7 +16,11 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
       description: true,
       imageURL: true,
       cookingTime: true,
-      ingredientItems: true,
+      ingredientItems: {
+        include: {
+          ingredient: true
+        }
+      },
       instructions: true,
       categories: true,
       user: {
