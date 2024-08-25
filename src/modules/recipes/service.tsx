@@ -18,8 +18,8 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
       cookingTime: true,
       ingredientItems: {
         include: {
-          ingredient: true
-        }
+          ingredient: true,
+        },
       },
       instructions: true,
       categories: true,
@@ -70,8 +70,8 @@ export async function getAllByCategorySlug(
       cookingTime: true,
       ingredientItems: {
         include: {
-          ingredient: true
-        }
+          ingredient: true,
+        },
       },
       instructions: true,
       categories: true,
@@ -115,8 +115,8 @@ export async function get(slugParam: string) {
       cookingTime: true,
       ingredientItems: {
         include: {
-          ingredient: true
-        }
+          ingredient: true,
+        },
       },
       instructions: true,
       categories: true,
