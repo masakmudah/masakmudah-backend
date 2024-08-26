@@ -5,6 +5,7 @@ import {
   RecipeByCategorySlugSchema,
 } from "./schema";
 import { prisma } from "../../lib/prisma";
+import { generateUniqueSlug } from "../../utils/generate-slug";
 
 export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
   const qParam = query?.q === undefined ? "" : query?.q;
@@ -141,23 +142,24 @@ export const create = async (body: z.infer<typeof CreateRecipeSchema>) => {
     const {
       name,
       description,
-      slug,
-      imageURL,
       instructions,
-      duration,
+      cookingTime,
       userId,
       categoryId,
       // ingredients,
     } = body;
 
+    const slug = await generateUniqueSlug(body.name);
+    const imageURL = body.imageURL !== undefined ? body.imageURL : "";
+    console.log(slug);
     const newRecipe = await prisma.recipe.create({
       data: {
         name,
         description,
-        slug,
         imageURL,
+        slug,
         instructions,
-        duration,
+        cookingTime,
         user: {
           connect: { id: userId }, // Ensure the recipe is associated with a user
         },
