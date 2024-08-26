@@ -1,4 +1,4 @@
-import { generateRandomCategoryIds } from "../../src/utils/generate-random-categoryIds";
+import { generateRandomCategoryIds } from "../../src/utils/genereta-random-category-ids";
 import { categories } from "./categories";
 
 export const recipes = [
@@ -8,7 +8,7 @@ export const recipes = [
     description: "Resep nasi goreng spesial.",
     cookingTime: "30 menit",
     imageURL:
-      "https://img-global.cpcdn.com/recipes/9b66747d60cbff8e/640x640sq70/photo.webp",
+      "https://ucarecdn.com/aa5a051e-4c79-425c-8ea7-8b38cc9307f1/nasigoreng.png",
     userId: "f58ch2o6z749s7wj4cwbc7jg",
     ingredientItems: [
       {
@@ -79,7 +79,7 @@ export const recipes = [
     description: "Resep sate ayam dengan bumbu kacang.",
     cookingTime: "30 menit",
     imageURL:
-      "https://img-global.cpcdn.com/recipes/8aaae9483e227043/640x640sq70/photo.webp",
+      "https://ucarecdn.com/469012c8-ddc1-449c-a697-421a434864ea/sateayam.png",
     userId: "f58ch2o6z749s7wj4cwbc7jg",
     ingredientItems: [
       {
@@ -151,7 +151,7 @@ export const recipes = [
     description: "Resep rendang daging khas Padang.",
     cookingTime: "2 jam",
     imageURL:
-      "https://img-global.cpcdn.com/recipes/71371aa56173f543/640x640sq70/photo.webp",
+      "https://ucarecdn.com/5d20a762-8940-4f8e-8e86-ae6144a4c22a/rendangdaging.png",
     userId: "f58ch2o6z749s7wj4cwbc7jg",
     ingredientItems: [
       {
@@ -225,7 +225,7 @@ export const recipes = [
     description: "Resep gado-gado sayur dengan saus kacang.",
     cookingTime: "20 menit",
     imageURL:
-      "https://img-global.cpcdn.com/recipes/609289176a0bd330/640x640sq70/photo.webp",
+      "https://ucarecdn.com/b0809cbc-cf56-4f9b-acb4-0dbe013d7a34/gadogado.png",
     userId: "f58ch2o6z749s7wj4cwbc7jg",
     ingredientItems: [
       {
@@ -294,7 +294,7 @@ export const recipes = [
     description: "Resep bakso daging sapi dengan kuah kaldu.",
     cookingTime: "60 menit",
     imageURL:
-      "https://img-global.cpcdn.com/recipes/410f986bf2d274d7/640x640sq70/photo.webp",
+      "https://ucarecdn.com/9ad6a3ea-169c-4f2c-997d-50e8caa871fa/bakso.png",
     userId: "f58ch2o6z749s7wj4cwbc7jg",
     ingredientItems: [
       {
@@ -364,7 +364,7 @@ export const recipes = [
     description: "Resep mie goreng dengan telur dan sayuran.",
     cookingTime: "10 menit",
     imageURL:
-      "https://img-global.cpcdn.com/recipes/4b79019187c13f75/640x640sq70/photo.webp",
+      "https://ucarecdn.com/a2071ec3-ffd2-470c-9dc2-605fedb52d05/miegoreng.png",
     userId: "spfilbroj5xoa0aoghyh5t40",
     ingredientItems: [
       {
@@ -434,7 +434,7 @@ export const recipes = [
     description: "Resep soto ayam kuah kuning.",
     cookingTime: "60 menit",
     imageURL:
-      "https://img-global.cpcdn.com/recipes/3b54f33e81fc64c8/640x640sq70/photo.webp",
+      "https://ucarecdn.com/ce84574b-d931-4bbf-8488-758f5f3e71c6/sotoayam.png",
     userId: "spfilbroj5xoa0aoghyh5t40",
     ingredientItems: [
       {
@@ -507,7 +507,7 @@ export const recipes = [
     description: "Resep pecel lele dengan sambal terasi.",
     cookingTime: "30 menit",
     imageURL:
-      "https://img-global.cpcdn.com/recipes/457e8176ae1d550c/640x640sq70/photo.webp",
+      "https://ucarecdn.com/0ec48b8f-b92a-41b5-9359-c522f80f4e67/pecellele.png",
     userId: "spfilbroj5xoa0aoghyh5t40",
     ingredientItems: [
       {
@@ -574,7 +574,7 @@ export const recipes = [
     description: "Resep gudeg khas Jogja dengan nangka muda.",
     cookingTime: "60 menit",
     imageURL:
-      "https://img-global.cpcdn.com/recipes/3dfd2e7d0cda4552/640x640sq70/photo.webp",
+      "https://ucarecdn.com/7b5139e1-88d0-4b76-92e9-ca275bcfbb44/gudegjogja.png",
     userId: "spfilbroj5xoa0aoghyh5t40",
     ingredientItems: [
       {
@@ -641,7 +641,7 @@ export const recipes = [
     description: "Resep nasi uduk dengan sambal kacang.",
     cookingTime: "60 menit",
     imageURL:
-      "https://img-global.cpcdn.com/recipes/ad009aa4e8049ce0/640x640sq70/photo.webp",
+      "https://ucarecdn.com/537475d0-ea1c-4ee5-8e68-185ce5a0de9e/nasiuduk.png",
     userId: "spfilbroj5xoa0aoghyh5t40",
     ingredientItems: [
       {
