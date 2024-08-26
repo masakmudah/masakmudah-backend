@@ -1,5 +1,4 @@
 import { z } from "zod";
-// import { OpenAPIHono } from "@hono/zod-openapi";
 
 export const QueryRecipeSchema = z.object({
   q: z.string().optional(),
