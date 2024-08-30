@@ -3,6 +3,7 @@ import * as recipeService from "./service";
 import {
   QueryRecipeSchema,
   RecipeByCategorySlugSchema,
+  RecipeByUsernameSchema,
   DetailRecipeSchema,
   CreateRecipeSchema,
 } from "./schema";
@@ -71,6 +72,34 @@ recipesRoute.openapi(
   async (c) => {
     const data = await recipeService.getAllByCategorySlug(
       c.req.query() as z.infer<typeof RecipeByCategorySlugSchema>
+    );
+
+    return c.json({
+      message: "Success",
+      data,
+    });
+  }
+);
+
+//GET Recipe by Username
+recipesRoute.openapi(
+  {
+    method: "get",
+    path: "/username/{username}",
+    description: "Get all recipes by username",
+    request: {
+      query: RecipeByUsernameSchema,
+    },
+    responses: {
+      200: {
+        description: "List of recipes by username",
+      },
+    },
+    tags: API_TAG,
+  },
+  async (c) => {
+    const data = await recipeService.getAllByUsername(
+      c.req.query() as z.infer<typeof RecipeByUsernameSchema>
     );
 
     return c.json({
