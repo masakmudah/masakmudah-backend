@@ -1,4 +1,5 @@
 import { z } from "zod";
+// import { OpenAPIHono } from "@hono/zod-openapi";
 
 export const QueryRecipeSchema = z.object({
   q: z.string().optional(),
@@ -6,6 +7,10 @@ export const QueryRecipeSchema = z.object({
 
 export const RecipeByCategorySlugSchema = z.object({
   categorySlug: z.string(),
+});
+
+export const RecipeByUsernameSchema = z.object({
+  username: z.string(),
 });
 
 export const DetailRecipeSchema = z.object({
