@@ -98,9 +98,8 @@ recipesRoute.openapi(
     tags: API_TAG,
   },
   async (c) => {
-    const data = await recipeService.getAllByUsername(
-      c.req.query() as z.infer<typeof RecipeByUsernameSchema>
-    );
+    const usernameParam = c.req.param("username")!;
+    const data = await recipeService.getAllByUsername(usernameParam);
 
     return c.json({
       message: "Success",
