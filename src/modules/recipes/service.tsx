@@ -103,9 +103,7 @@ export async function getAllByCategorySlug(
   return allRecipes;
 }
 
-export async function getAllByUsername(
-  query: z.infer<typeof RecipeByUsernameSchema>
-) {
+export async function getAllByUsername(usernameParam: string) {
   const allRecipes = await prisma.recipe.findMany({
     select: {
       id: true,
@@ -134,7 +132,7 @@ export async function getAllByUsername(
     },
     where: {
       user: {
-        username: query?.username,
+        username: usernameParam,
       },
     },
     orderBy: {
