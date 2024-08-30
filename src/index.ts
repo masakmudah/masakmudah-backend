@@ -5,6 +5,7 @@ import { cors } from "hono/cors";
 import { registerRoute } from "./routes/register";
 import { usersRoute } from "./modules/users/route";
 import { authRoute } from "./modules/auth/auth.route";
+import { accountRoute } from "./routes/account";
 import { recipesRoute } from "./modules/recipes/route";
 import { categoriesRoute } from "./modules/categories/route";
 
@@ -62,6 +63,7 @@ app.route("/auth", authRoute);
 app.route("/users", usersRoute);
 app.route("/recipes", recipesRoute);
 app.route("/categories", categoriesRoute);
+app.route("/me", accountRoute);
 
 // SWAGGER UI
 app.get("/ui", swaggerUI({ url: "/doc" }));
