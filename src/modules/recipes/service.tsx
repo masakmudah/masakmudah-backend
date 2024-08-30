@@ -3,6 +3,7 @@ import {
   CreateRecipeSchema,
   QueryRecipeSchema,
   RecipeByCategorySlugSchema,
+  RecipeByUsernameSchema,
 } from "./schema";
 import { prisma } from "../../lib/prisma";
 import { generateUniqueSlug } from "../../utils/generate-slug";
@@ -101,6 +102,33 @@ export async function getAllByCategorySlug(
 
   return allRecipes;
 }
+
+recipesRoute.openapi(
+  {
+    method: "get",
+    path: "/username/{username}",
+    description: "Get all recipes by username",
+    request: {
+      query: RecipeByUsernameSchema,
+    },
+    responses: {
+      200: {
+        description: "List of recipes by username",
+      },
+    },
+    tags: API_TAG,
+  },
+  async (c) => {
+    const data = await recipeService.getAllByUsername(
+      c.req.query() as z.infer<typeof RecipeByUsernameSchema>
+    );
+
+    return c.json({
+      message: "Success",
+      data,
+    });
+  }
+);
 
 export async function get(slugParam: string) {
   const recipe = await prisma.recipe.findUnique({
