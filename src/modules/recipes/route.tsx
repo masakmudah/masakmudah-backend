@@ -88,7 +88,7 @@ recipesRoute.openapi(
     path: "/username/{username}",
     description: "Get all recipes by username",
     request: {
-      query: RecipeByUsernameSchema,
+      params: RecipeByUsernameSchema,
     },
     responses: {
       200: {
