@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { LoginSchema, RegisterSchema } from "./auth-schema";
 import { prisma } from "../../lib/prisma";
 import { hashPassword, verifyPassword } from "../../lib/password";
@@ -27,8 +28,10 @@ export async function register(body: z.infer<typeof RegisterSchema>) {
       email: body.email,
     },
   });
+  
+  const token = await createToken(newUser.id);
 
-  return { success: true, user: newUser };
+  return { success: true, user: newUser, token: token, message: "Success" };
 }
 
 export async function login(body: z.infer<typeof LoginSchema>) {
