@@ -103,32 +103,47 @@ export async function getAllByCategorySlug(
   return allRecipes;
 }
 
-recipesRoute.openapi(
-  {
-    method: "get",
-    path: "/username/{username}",
-    description: "Get all recipes by username",
-    request: {
-      query: RecipeByUsernameSchema,
+export async function getAllByUsername(
+  query: z.infer<typeof RecipeByUsernameSchema>
+) {
+  const allRecipes = await prisma.recipe.findMany({
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      description: true,
+      imageURL: true,
+      cookingTime: true,
+      ingredientItems: {
+        include: {
+          ingredient: true,
+        },
+      },
+      instructions: true,
+      categories: true,
+      user: {
+        select: {
+          id: true,
+          username: true,
+          fullname: true,
+          email: true,
+        },
+      },
+      createdAt: true,
+      updatedAt: true,
     },
-    responses: {
-      200: {
-        description: "List of recipes by username",
+    where: {
+      user: {
+        username: query?.username,
       },
     },
-    tags: API_TAG,
-  },
-  async (c) => {
-    const data = await recipeService.getAllByUsername(
-      c.req.query() as z.infer<typeof RecipeByUsernameSchema>
-    );
+    orderBy: {
+      name: "asc",
+    },
+  });
 
-    return c.json({
-      message: "Success",
-      data,
-    });
-  }
-);
+  return allRecipes;
+}
 
 export async function get(slugParam: string) {
   const recipe = await prisma.recipe.findUnique({
