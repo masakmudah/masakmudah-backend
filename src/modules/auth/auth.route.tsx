@@ -43,10 +43,8 @@ authRoute.openapi(
     tags: apiTags,
   },
   async (c) => {
-    try
-    {
-      const token = await authService.register(await c.req.json());
-      await authService.register(await c.req.json());
+   try {
+      const { token } = await authService.register(await c.req.json());
 
       return c.json({
         message: "Success",
