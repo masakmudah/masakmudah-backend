@@ -44,10 +44,11 @@ authRoute.openapi(
   },
   async (c) => {
     try {
-      await authService.register(await c.req.json());
+      const { data } = await authService.register(await c.req.json());
 
       return c.json({
         message: "Success",
+        data,
       });
     } catch (error) {
       return c.json(

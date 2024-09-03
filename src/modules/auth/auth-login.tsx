@@ -28,7 +28,16 @@ export async function register(body: z.infer<typeof RegisterSchema>) {
     },
   });
 
-  return { success: true, user: newUser };
+  // Create token
+  const token = await createToken(newUser.id);
+
+  return {
+    success: true,
+    data: {
+      user: newUser,
+      token,
+    },
+  };
 }
 
 export async function login(body: z.infer<typeof LoginSchema>) {
