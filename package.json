@@ -2,7 +2,7 @@
   "name": "masakmudah-backend",
   "scripts": {
     "dev": "bun run --hot src/index.tsx",
-    "start": "bun run src/index.ts",
+    "start": "bun run src/index.tsx",
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:generate": "prisma generate",
