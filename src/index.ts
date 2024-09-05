@@ -4,10 +4,10 @@ import { cors } from "hono/cors";
 
 import { registerRoute } from "./routes/register";
 import { usersRoute } from "./modules/users/route";
-import { authRoute } from "./modules/auth/auth.route";
-import { accountRoute } from "./routes/account";
+import { authRoute } from "./routes/auth";
 import { recipesRoute } from "./modules/recipes/route";
 import { categoriesRoute } from "./modules/categories/route";
+import { WelcomePage } from "./welcome";
 
 type Bindings = {
   TOKEN: string;
@@ -47,25 +47,33 @@ app.openAPIRegistry.registerComponent(
   }
 );
 
-app.get("/", (c) => {
-  return c.json({
-    Message: "API Masak Mudah",
-    registeURL: "/auth/register",
-    loginURL: "/auth/login",
-    usersURL: "/users",
-    recipesURL: "/recipes",
-    categoriesURL: "/categories",
-    swaggerURL: "/ui",
-  });
-});
-
 app.route("/auth", authRoute);
 app.route("/users", usersRoute);
 app.route("/recipes", recipesRoute);
 app.route("/categories", categoriesRoute);
-app.route("/me", accountRoute);
 
 // SWAGGER UI
 app.get("/ui", swaggerUI({ url: "/doc" }));
+
+// WELCOME PAGE
+app.get("/", (c) =>
+  c.html(
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Welcome to Masakmudah REST API</title>
+        <meta
+          name="description"
+          content="Nusaventure helps you discover captivating tourist destinations and culinary delights in Nusantara."
+        />
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
+      <body>
+        <WelcomePage />
+      </body>
+    </html>
+  )
+);
 
 export default app;
