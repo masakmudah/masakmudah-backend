@@ -2,9 +2,8 @@ import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
 
-import { registerRoute } from "./routes/register";
 import { usersRoute } from "./modules/users/route";
-import { authRoute } from "./routes/auth";
+import { authRoute } from "./modules/auth/route";
 import { recipesRoute } from "./modules/recipes/route";
 import { categoriesRoute } from "./modules/categories/route";
 import { WelcomePage } from "./welcome";
