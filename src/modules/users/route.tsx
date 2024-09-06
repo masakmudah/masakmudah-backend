@@ -1,6 +1,11 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import * as userService from "./service";
-import { QueryUserSchema, DetailUserSchema, UserSchema } from "./schema";
+import * as recipeService from "../recipes/service";
+import {
+  QueryUserSchema,
+  DetailUserSchema,
+  RecipeByUsernameSchema,
+} from "./schema";
 import { z } from "zod";
 import { checkUserToken } from "../../middleware/check-user-token";
 
@@ -8,23 +13,17 @@ const API_TAG = ["Users"];
 
 const usersRoute = new OpenAPIHono();
 
-usersRoute.openAPIRegistry.registerComponent(
-  "securitySchemes",
-  "AuthorizationBearer",
-  {
-    type: "http",
-    scheme: "bearer",
-    in: "header",
-    description: "Bearer token",
-  }
-);
-
-// GET ALL USERS
 usersRoute.openapi(
   {
     method: "get",
     path: "/",
     description: "Get all users",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
     request: {
       query: QueryUserSchema,
     },
@@ -52,6 +51,12 @@ usersRoute.openapi(
     method: "get",
     path: "/{username}",
     description: "Get detail user by username ",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
     request: {
       params: DetailUserSchema,
     },
@@ -82,91 +87,32 @@ usersRoute.openapi(
 
 usersRoute.openapi(
   {
-    method: "put",
-    path: "/{username}",
-
+    method: "get",
+    path: "/{username}/recipes",
+    description: "Get all user recipes by username",
     middleware: checkUserToken(),
     security: [
       {
         AuthorizationBearer: [],
       },
     ],
-
-    description: "Update user by username ",
     request: {
-      body: {
-        content: {
-          "application/json": {
-            schema: UserSchema,
-          },
-        },
-      },
+      params: RecipeByUsernameSchema,
     },
     responses: {
       200: {
-        description: "Successfully update user",
-      },
-      404: {
-        description: "User not found",
+        description: "List user recipes by username",
       },
     },
     tags: API_TAG,
   },
   async (c) => {
     const usernameParam = c.req.param("username")!;
-    const body = await c.req.json();
-
-    const data = await userService.get(usernameParam);
-
-    if (!data) {
-      return c.json({ message: "User not found" }, 404);
-    }
-
-    const result = await userService.updateUser(usernameParam, body);
+    const data = await recipeService.getAllByUsername(usernameParam);
 
     return c.json({
-      message: "Susscessfully update user",
-      result,
-    });
-  }
-);
-
-usersRoute.openapi(
-  {
-    method: "delete",
-    path: "/{username}",
-    middleware: checkUserToken(),
-    security: [
-      {
-        AuthorizationBearer: [],
-      },
-    ],
-    description: "Delete detail user by username ",
-    request: {
-      params: DetailUserSchema,
-    },
-    responses: {
-      200: {
-        description: "Successfully delete user",
-      },
-      404: {
-        description: "User not found",
-      },
-    },
-    tags: API_TAG,
-  },
-  async (c) => {
-    const usernameParam = c.req.param("username")!;
-    const data = await userService.get(usernameParam);
-    if (!data) {
-      return c.json({ message: "User not found" }, 404);
-    }
-
-    const result = await userService.deleteUser(data.id);
-
-    return c.json({
-      message: "Susscessfully delete user",
-      result,
+      message: "Success",
+      data,
     });
   }
 );

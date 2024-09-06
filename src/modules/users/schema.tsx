@@ -8,7 +8,6 @@ export const DetailUserSchema = z.object({
   username: z.string().min(1),
 });
 
-export const UserSchema = z.object({
-  fullname: z.string().min(1),
-  email: z.string().min(1),
+export const RecipeByUsernameSchema = z.object({
+  username: z.string(),
 });

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { QueryUserSchema, UserSchema } from "./schema";
+import { QueryUserSchema } from "./schema";
 import { prisma } from "../../lib/prisma";
 
 export async function getAll(query: z.infer<typeof QueryUserSchema>) {
@@ -9,6 +9,8 @@ export async function getAll(query: z.infer<typeof QueryUserSchema>) {
         id: true,
         username: true,
         fullname: true,
+        email: true,
+        imageURL: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -20,6 +22,8 @@ export async function getAll(query: z.infer<typeof QueryUserSchema>) {
       id: true,
       username: true,
       fullname: true,
+      email: true,
+      imageURL: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -39,7 +43,7 @@ export async function getAll(query: z.infer<typeof QueryUserSchema>) {
         },
         {
           fullname: {
-            contains: query?.search,
+            contains: query?.q,
             mode: "insensitive",
           },
         },
@@ -59,35 +63,11 @@ export async function get(username: string) {
       username: true,
       fullname: true,
       email: true,
+      imageURL: true,
       createdAt: true,
       updatedAt: true,
     },
   });
 
   return user;
-}
-
-export async function deleteUser(id: string) {
-  const deletePassword = await prisma.password.deleteMany({
-    where: { userId: id },
-  });
-
-  const deleteUser = await prisma.user.deleteMany({
-    where: { id: id },
-  });
-
-  return deleteUser;
-}
-
-export async function updateUser(
-  username: string,
-  body: z.infer<typeof UserSchema>
-) {
-  return await prisma.user.update({
-    where: { username: username },
-    data: {
-      fullname: body.fullname,
-      email: body.email,
-    },
-  });
 }
