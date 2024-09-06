@@ -93,9 +93,7 @@ authRoute.openapi(
 
       return c.json({
         message: "Success",
-        data: {
-          token,
-        },
+        token,
       });
     } catch (error) {
       return c.json(
