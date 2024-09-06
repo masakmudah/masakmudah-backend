@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { LoginSchema, RegisterSchema } from "./auth-schema";
+import { LoginSchema, RegisterSchema } from "./schema";
 import { prisma } from "../../lib/prisma";
 import { hashPassword, verifyPassword } from "../../lib/password";
 import { createToken } from "../../lib/jwt";
