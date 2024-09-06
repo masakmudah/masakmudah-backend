@@ -51,12 +51,6 @@ usersRoute.openapi(
     method: "get",
     path: "/{username}",
     description: "Get detail user by username ",
-    middleware: checkUserToken(),
-    security: [
-      {
-        AuthorizationBearer: [],
-      },
-    ],
     request: {
       params: DetailUserSchema,
     },
