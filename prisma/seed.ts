@@ -5,6 +5,8 @@ import { hashPassword } from "../src/lib/password";
 import { categories } from "./data/categories";
 import { generateUniqueSlug } from "../src/utils/generate-slug";
 
+const PROFILE_PREFIX_URL = "https://api.dicebear.com/9.x/thumbs/svg?seed=";
+
 async function seed() {
   // Seeding user data
   for (let user of users) {
@@ -16,12 +18,14 @@ async function seed() {
         email: user.email,
         username: user.username,
         fullname: user.fullname,
+        imageURL: PROFILE_PREFIX_URL + user.username,
       },
       create: {
         id: user.id,
         email: user.email,
         username: user.username,
         fullname: user.fullname,
+        imageURL: PROFILE_PREFIX_URL + user.username,
         password: {
           create: {
             hash: await hashPassword(user.password),
