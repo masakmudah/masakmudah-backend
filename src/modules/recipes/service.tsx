@@ -3,7 +3,6 @@ import {
   CreateRecipeSchema,
   QueryRecipeSchema,
   RecipeByCategorySlugSchema,
-  RecipeByUsernameSchema,
 } from "./schema";
 import { prisma } from "../../lib/prisma";
 import { generateUniqueSlug } from "../../utils/generate-slug";
@@ -31,6 +30,7 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
           username: true,
           fullname: true,
           email: true,
+          imageURL: true,
         },
       },
       createdAt: true,
@@ -83,6 +83,7 @@ export async function getAllByCategorySlug(
           username: true,
           fullname: true,
           email: true,
+          imageURL: true,
         },
       },
       createdAt: true,
@@ -125,6 +126,7 @@ export async function getAllByUsername(usernameParam: string) {
           username: true,
           fullname: true,
           email: true,
+          imageURL: true,
         },
       },
       createdAt: true,
@@ -168,6 +170,7 @@ export async function get(slugParam: string) {
           username: true,
           fullname: true,
           email: true,
+          imageURL: true,
         },
       },
       createdAt: true,
