@@ -1,5 +1,5 @@
-import { z } from "zod";
-// import { OpenAPIHono } from "@hono/zod-openapi";
+// import { z } from "zod";
+import { z } from "@hono/zod-openapi";
 
 export const QueryRecipeSchema = z.object({
   q: z.string().optional(),
@@ -25,5 +25,5 @@ export const CreateRecipeSchema = z.object({
   imageURL: z.string().optional(),
   instructions: z.string().optional(),
   userId: z.string(),
-  categoryId: z.string().optional(),
+  categoryId: z.string(),
 });

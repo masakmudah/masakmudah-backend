@@ -179,7 +179,7 @@ recipesRoute.openapi(
       {
         code: 201,
         status: "success",
-        newRecipe,
+        data: newRecipe,
       },
       201
     );
