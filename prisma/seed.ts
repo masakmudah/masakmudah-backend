@@ -103,7 +103,9 @@ async function seed() {
           create: ingredientItems,
         },
         categories: {
-          connect: recipe.categoryIds.map((categoryId) => ({
+          connect: (
+            await recipe.categoryIds
+          ).map((categoryId) => ({
             id: categoryId,
           })),
         },
