@@ -1,5 +1,4 @@
-import { generateRandomCategoryIds } from "../../src/utils/genereta-random-category-ids";
-import { categories } from "./categories";
+import { getCategoryIdBySlug } from "../../src/utils/get-category-id-by-slug";
 
 export const recipes = [
   {
@@ -68,10 +67,11 @@ export const recipes = [
       { step: 4, description: "Tuangkan kecap manis, aduk hingga merata." },
       {
         step: 5,
-        description: "Sajikan nasi goreng dengan pelengkap sesuai selera.",
+        description:
+          "Sajikan nasi goreng dengan pelengkap suwiran ayam atau sosis sesuai selera.",
       },
     ],
-    categoryIds: generateRandomCategoryIds(categories),
+    categoryIds: getCategoryIdBySlug(["ayam"]),
   },
   {
     id: "fe5unxwewzzm0klnic56g1wn",
@@ -143,7 +143,7 @@ export const recipes = [
       },
       { step: 4, description: "Sajikan sate ayam dengan bumbu kacang." },
     ],
-    categoryIds: generateRandomCategoryIds(categories),
+    categoryIds: getCategoryIdBySlug(["ayam"]),
   },
   {
     id: "xlltcvjp1n2ehpddgf0vbajd",
@@ -217,7 +217,7 @@ export const recipes = [
           "Masak hingga rendang mengering dan bumbu meresap sempurna.",
       },
     ],
-    categoryIds: generateRandomCategoryIds(categories),
+    categoryIds: getCategoryIdBySlug(["daging"]),
   },
   {
     id: "mqc8by4941kbxipuldyu1ymz",
@@ -286,7 +286,7 @@ export const recipes = [
         description: "Sajikan gado-gado dengan pelengkap sesuai selera.",
       },
     ],
-    categoryIds: generateRandomCategoryIds(categories),
+    categoryIds: getCategoryIdBySlug(["sayuran"]),
   },
   {
     id: "em88a3piv8cpot3erhjod3wk",
@@ -356,7 +356,7 @@ export const recipes = [
         description: "Sajikan bakso dengan kuah kaldu dan pelengkap.",
       },
     ],
-    categoryIds: generateRandomCategoryIds(categories),
+    categoryIds: getCategoryIdBySlug(["daging"]),
   },
   {
     id: "dauk8w2d7e78av47l0xkgrng",
@@ -426,7 +426,7 @@ export const recipes = [
         description: "Masukkan mie dan kecap manis, aduk hingga merata.",
       },
     ],
-    categoryIds: generateRandomCategoryIds(categories),
+    categoryIds: getCategoryIdBySlug(["sayuran"]),
   },
   {
     id: "vei3oeq8kuoz0aovk2poa3d4",
@@ -499,7 +499,7 @@ export const recipes = [
         description: "Sajikan soto ayam dengan pelengkap sesuai selera.",
       },
     ],
-    categoryIds: generateRandomCategoryIds(categories),
+    categoryIds: getCategoryIdBySlug(["ayam"]),
   },
   {
     id: "a7mba5y1hpbsxe3sgto3109c",
@@ -566,7 +566,7 @@ export const recipes = [
       { step: 3, description: "Tumis bumbu halus hingga matang." },
       { step: 4, description: "Sajikan lele goreng dengan sambal terasi." },
     ],
-    categoryIds: generateRandomCategoryIds(categories),
+    categoryIds: getCategoryIdBySlug(["daging"]),
   },
   {
     id: "tjwofowa94ghzlhx421utlsf",
@@ -633,7 +633,7 @@ export const recipes = [
       },
       { step: 5, description: "Tambahkan telur rebus, masak sebentar." },
     ],
-    categoryIds: generateRandomCategoryIds(categories),
+    categoryIds: getCategoryIdBySlug(["sayuran"]),
   },
   {
     id: "aj5jh2ul890phzetx8ds01u2",
@@ -703,6 +703,6 @@ export const recipes = [
         description: "Sajikan nasi uduk dengan sambal kacang dan pelengkap.",
       },
     ],
-    categoryIds: generateRandomCategoryIds(categories),
+    categoryIds: getCategoryIdBySlug(["sayuran"]),
   },
 ];
