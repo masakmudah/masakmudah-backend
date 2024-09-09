@@ -13,6 +13,7 @@ model User {
   fullname     String?
   email        String        @unique
   imageURL     String?
+  description  String?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   password     Password?
