@@ -1,3 +1,5 @@
+import { generateDescription } from "../../src/utils/generate-description";
+
 export type Password = {
   id: string;
   userId: string;
@@ -8,6 +10,7 @@ export type User = {
   id?: string;
   username: string;
   fullname: string;
+  description?: string;
   email: string;
   password: string;
 };
@@ -18,6 +21,7 @@ export const users: User[] = [
     username: "chian",
     fullname: "Chian Yung",
     email: "chian@example.com",
+    description: generateDescription(),
     password: "Admin1234",
   },
   {
@@ -25,6 +29,7 @@ export const users: User[] = [
     username: "sidiqcahyono",
     fullname: "Sidiq Cahyono",
     email: "sidiqcahyono@example.com",
+    description: generateDescription(),
     password: "Admin1234",
   },
   {
@@ -32,6 +37,7 @@ export const users: User[] = [
     username: "shiwilsahid",
     fullname: "Shiwil Sahid",
     email: "shiwilsahid@example.com",
+    description: generateDescription(),
     password: "Admin1234",
   },
   {
@@ -39,6 +45,7 @@ export const users: User[] = [
     username: "rido",
     fullname: "Rido Atmanto",
     email: "rido@example.com",
+    description: generateDescription(),
     password: "Admin1234",
   },
   {
@@ -46,6 +53,7 @@ export const users: User[] = [
     username: "chefarnold",
     fullname: "Chef Arnold Poernomo",
     email: "chefarnold@example.com",
+    description: generateDescription(),
     password: "Admin1234",
   },
   {
@@ -53,6 +61,7 @@ export const users: User[] = [
     username: "chefreynold",
     fullname: "Chef Reynold Poernomo",
     email: "chefreynold@example.com",
+    description: generateDescription(),
     password: "Admin1234",
   },
   {
@@ -60,6 +69,7 @@ export const users: User[] = [
     username: "cheffarah",
     fullname: "Chef Farah Quinn",
     email: "cheffarah@example.com",
+    description: generateDescription(),
     password: "Admin1234",
   },
   {
@@ -67,6 +77,7 @@ export const users: User[] = [
     username: "chefrinrin",
     fullname: "Chef Rinrin Marinka",
     email: "chefrinrin@example.com",
+    description: generateDescription(),
     password: "Admin1234",
   },
   {
@@ -74,6 +85,7 @@ export const users: User[] = [
     username: "chefjuna",
     fullname: "Chef Juna Rorimpandey",
     email: "chefjuna@example.com",
+    description: generateDescription(),
     password: "Admin1234",
   },
   {
@@ -81,6 +93,7 @@ export const users: User[] = [
     username: "chefrenatta",
     fullname: "Chef Renatta Moeloek",
     email: "chefrenatta@example.com",
+    description: generateDescription(),
     password: "Admin1234",
   },
 ];
