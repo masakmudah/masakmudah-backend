@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { QueryUserSchema } from "./schema";
+import { QueryUserSchema, UserSchema } from "./schema";
 import { prisma } from "../../lib/prisma";
 
 export async function getAll(query: z.infer<typeof QueryUserSchema>) {
@@ -73,4 +73,22 @@ export async function get(username: string) {
   });
 
   return user;
+}
+
+export async function updateUser(id: string, body: z.infer<typeof UserSchema>) {
+  const updatedUser = await prisma.user.update({
+    where: { id },
+    data: {
+      fullname: body.fullname,
+    },
+  });
+  return updatedUser;
+}
+
+export async function getUserById(id: string) {
+  const userById = await prisma.user.findUnique({
+    where: { id },
+  });
+
+  return userById;
 }

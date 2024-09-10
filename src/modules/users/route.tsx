@@ -5,9 +5,12 @@ import {
   QueryUserSchema,
   DetailUserSchema,
   RecipeByUsernameSchema,
+  UserByIdSchema,
+  UserSchema,
 } from "./schema";
 import { z } from "zod";
 import { checkUserToken } from "../../middleware/check-user-token";
+import { getUserById, updateUser } from "./service";
 
 const API_TAG = ["Users"];
 
@@ -108,6 +111,67 @@ usersRoute.openapi(
       message: "Success",
       data,
     });
+  }
+);
+
+usersRoute.openapi(
+  {
+    method: "put",
+    path: "/{id}",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
+    request: {
+      params: UserByIdSchema,
+      body: {
+        content: {
+          "application/json": {
+            schema: UserSchema,
+          },
+        },
+      },
+    },
+    description: "Update user by id.",
+    responses: {
+      201: {
+        description: "Successfully updated user.",
+      },
+      404: {
+        description: "User not found.",
+      },
+    },
+    tags: API_TAG,
+  },
+  async (c) => {
+    const id = c.req.param("id")!;
+
+    const userById = await getUserById(id);
+
+    if (!userById) {
+      return c.json(
+        {
+          code: 404,
+          status: "error",
+          message: "User not found.",
+        },
+        404
+      );
+    }
+
+    const body: z.infer<typeof UserSchema> = await c.req.json();
+    const updatedUser = await updateUser(id, body);
+
+    return c.json(
+      {
+        code: 201,
+        status: "success",
+        updatedUser,
+      },
+      201
+    );
   }
 );
 
