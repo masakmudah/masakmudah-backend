@@ -6,6 +6,7 @@ import { usersRoute } from "./modules/users/route";
 import { authRoute } from "./modules/auth/route";
 import { recipesRoute } from "./modules/recipes/route";
 import { categoriesRoute } from "./modules/categories/route";
+import { savedRecipesRoute } from "./modules/saved-recipes/route";
 import { WelcomePage } from "./welcome";
 
 type Bindings = {
@@ -50,6 +51,7 @@ app.route("/auth", authRoute);
 app.route("/users", usersRoute);
 app.route("/recipes", recipesRoute);
 app.route("/categories", categoriesRoute);
+app.route("/saved-recipes", savedRecipesRoute);
 
 // SWAGGER UI
 app.get("/ui", swaggerUI({ url: "/doc" }));
