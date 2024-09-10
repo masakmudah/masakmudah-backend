@@ -4,7 +4,7 @@ import { CreateSavedRecipeSchema, savedRecipesByIdSchema } from "./schema";
 import { z } from "zod";
 import { checkUserToken } from "../../middleware/check-user-token";
 
-const API_TAG = ["Recipes"];
+const API_TAG = ["Saved Recipes"];
 
 const savedRecipesRoute = new OpenAPIHono();
 
