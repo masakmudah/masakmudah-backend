@@ -134,6 +134,7 @@ authRoute.openapi(
         fullname: true,
         email: true,
         imageURL: true,
+        description: true,
         createdAt: true,
         updatedAt: true,
       },
