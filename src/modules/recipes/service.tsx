@@ -226,3 +226,19 @@ export const create = async (body: z.infer<typeof CreateRecipeSchema>) => {
     throw error;
   }
 };
+
+export async function getRecipeById(id: string) {
+  const recipeById = await prisma.recipe.findUnique({
+    where: { id },
+  });
+
+  return recipeById;
+}
+
+export async function deleteRecipe(id: string) {
+  const deleteRecipe = await prisma.recipe.delete({
+    where: { id },
+  });
+
+  return deleteRecipe;
+}

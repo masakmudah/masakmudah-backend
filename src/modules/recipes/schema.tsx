@@ -27,3 +27,7 @@ export const CreateRecipeSchema = z.object({
   userId: z.string(),
   categoryId: z.string(),
 });
+
+export const RecipeByIdSchema = z.object({
+  id: z.string().min(1),
+});

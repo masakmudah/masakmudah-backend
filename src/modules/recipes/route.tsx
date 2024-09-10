@@ -6,6 +6,7 @@ import {
   RecipeByUsernameSchema,
   DetailRecipeSchema,
   CreateRecipeSchema,
+  RecipeByIdSchema,
 } from "./schema";
 import { z } from "zod";
 import { checkUserToken } from "../../middleware/check-user-token";
@@ -183,6 +184,46 @@ recipesRoute.openapi(
       },
       201
     );
+  }
+);
+
+recipesRoute.openapi(
+  {
+    method: "delete",
+    path: "/{id}",
+    middleware: checkUserToken(),
+    security: [
+      {
+        AuthorizationBearer: [],
+      },
+    ],
+    description: "Delete recipe by id ",
+    request: {
+      params: RecipeByIdSchema,
+    },
+    responses: {
+      200: {
+        description: "Successfully delete recipe",
+      },
+      404: {
+        description: "Recipe not found",
+      },
+    },
+    tags: API_TAG,
+  },
+  async (c) => {
+    const idParam = c.req.param("id")!;
+    const data = await recipeService.getRecipeById(idParam);
+    if (!data) {
+      return c.json({ message: "Recipe not found" }, 404);
+    }
+
+    const result = await recipeService.deleteRecipe(data.id);
+
+    return c.json({
+      message: "Susscessfully delete recipe",
+      result,
+    });
   }
 );
 
