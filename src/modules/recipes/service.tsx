@@ -194,7 +194,7 @@ export const create = async (body: z.infer<typeof CreateRecipeSchema>) => {
       cookingTime,
       userId,
       categoryId,
-      // ingredients,
+      ingredientItems,
     } = body;
 
     const slug = await generateUniqueSlug(body.name);
@@ -214,9 +214,55 @@ export const create = async (body: z.infer<typeof CreateRecipeSchema>) => {
         categories: {
           connect: { id: categoryId },
         },
-        // ingredientItems: {
-        //   create: ingredients || [], // Create related ingredient items if provided
-        // },
+        ingredientItems: {
+          create: ingredientItems.map((ingredientItem) => ({
+            sequence: ingredientItem.sequence,
+            quantity: ingredientItem.quantity,
+            measurement: ingredientItem.measurement,
+            ingredient: {
+              connectOrCreate: {
+                where: {
+                  slug: ingredientItem.ingredient.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-"),
+                },
+                create: {
+                  name: ingredientItem.ingredient.name,
+                  slug: ingredientItem.ingredient.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-"),
+                },
+              },
+            },
+          })),
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        description: true,
+        imageURL: true,
+        cookingTime: true,
+        ingredientItems: {
+          include: {
+            ingredient: true,
+          },
+        },
+        instructions: true,
+        categories: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            fullname: true,
+            email: true,
+            imageURL: true,
+            description: true,
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
       },
     });
 
