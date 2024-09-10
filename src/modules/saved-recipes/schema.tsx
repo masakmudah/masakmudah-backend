@@ -1,10 +1,14 @@
 import { z } from "zod";
 
+export const SavedRecipeByUsernameSchema = z.object({
+  username: z.string().min(1),
+});
+
 export const CreateSavedRecipeSchema = z.object({
-  userId: z.string(),
+  userId: z.string().min(1),
   recipeId: z.string().min(1),
 });
 
-export const savedRecipesByIdSchema = z.object({
+export const SavedRecipesByIdSchema = z.object({
   id: z.string().min(1),
 });

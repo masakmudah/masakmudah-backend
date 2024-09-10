@@ -1,6 +1,10 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import * as savedRecipeService from "./service";
-import { CreateSavedRecipeSchema, savedRecipesByIdSchema } from "./schema";
+import {
+  SavedRecipeByUsernameSchema,
+  CreateSavedRecipeSchema,
+  SavedRecipesByIdSchema,
+} from "./schema";
 import { z } from "zod";
 import { checkUserToken } from "../../middleware/check-user-token";
 
@@ -25,6 +29,9 @@ savedRecipesRoute.openapi(
     method: "get",
     path: "/{username}",
     description: "Get all saved recipes",
+    request: {
+      params: SavedRecipeByUsernameSchema,
+    },
     middleware: checkUserToken(),
     security: [
       {
@@ -112,7 +119,7 @@ savedRecipesRoute.openapi(
       },
     ],
     request: {
-      params: savedRecipesByIdSchema,
+      params: SavedRecipesByIdSchema,
     },
     responses: {
       200: {

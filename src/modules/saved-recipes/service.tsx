@@ -10,15 +10,6 @@ export async function getAll(usernameParam: string) {
       recipeId: true,
       createdAt: true,
       updatedAt: true,
-      user: {
-        select: {
-          id: true,
-          username: true,
-          fullname: true,
-          email: true,
-          imageURL: true,
-        },
-      },
       recipes: {
         select: {
           id: true,
@@ -34,6 +25,15 @@ export async function getAll(usernameParam: string) {
           },
           instructions: true,
           categories: true,
+          user: {
+            select: {
+              id: true,
+              username: true,
+              fullname: true,
+              email: true,
+              imageURL: true,
+            },
+          },
           createdAt: true,
           updatedAt: true,
         },
@@ -79,15 +79,6 @@ export async function getSavedRecipeById(id: string) {
       recipeId: true,
       createdAt: true,
       updatedAt: true,
-      user: {
-        select: {
-          id: true,
-          username: true,
-          fullname: true,
-          email: true,
-          imageURL: true,
-        },
-      },
       recipes: {
         select: {
           id: true,
@@ -103,6 +94,15 @@ export async function getSavedRecipeById(id: string) {
           },
           instructions: true,
           categories: true,
+          user: {
+            select: {
+              id: true,
+              username: true,
+              fullname: true,
+              email: true,
+              imageURL: true,
+            },
+          },
           createdAt: true,
           updatedAt: true,
         },
@@ -124,15 +124,6 @@ export async function checkRecipeExist(userId: string, recipeId: string) {
       recipeId: true,
       createdAt: true,
       updatedAt: true,
-      user: {
-        select: {
-          id: true,
-          username: true,
-          fullname: true,
-          email: true,
-          imageURL: true,
-        },
-      },
       recipes: {
         select: {
           id: true,
@@ -148,6 +139,15 @@ export async function checkRecipeExist(userId: string, recipeId: string) {
           },
           instructions: true,
           categories: true,
+          user: {
+            select: {
+              id: true,
+              username: true,
+              fullname: true,
+              email: true,
+              imageURL: true,
+            },
+          },
           createdAt: true,
           updatedAt: true,
         },
