@@ -27,7 +27,7 @@ export const CreateRecipeSchema = z.object({
   instructions: z.array(
     z.object({
       step: z.number(),
-      text: z.string(),
+      description: z.string(),
     })
   ),
   ingredientItems: z.array(
