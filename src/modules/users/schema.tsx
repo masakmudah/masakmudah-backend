@@ -18,4 +18,5 @@ export const UserByIdSchema = z.object({
 
 export const UserSchema = z.object({
   fullname: z.string().min(1).max(100).trim(),
+  description: z.string().trim().optional(),
 });

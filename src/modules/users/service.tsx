@@ -80,6 +80,7 @@ export async function updateUser(id: string, body: z.infer<typeof UserSchema>) {
     where: { id },
     data: {
       fullname: body.fullname,
+      description: body.description,
     },
   });
   return updatedUser;
