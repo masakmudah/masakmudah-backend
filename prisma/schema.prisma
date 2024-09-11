@@ -48,7 +48,7 @@ model IngredientItem {
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
   ingredientId String
 
-  quantity    Int
+  quantity    Float
   measurement String
 
   recipes Recipe[]
