@@ -47,23 +47,16 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
         },
       ],
     },
-    // orderBy: {
-    //   name: "asc",
-    // },
   });
 
   const showRandomRecipes = allRecipes.sort(() => Math.random() - 0.5);
   return showRandomRecipes;
-
-  // return allRecipes;
 }
 
-export async function getAllByCategorySlug(
-  query: z.infer<typeof RecipeByCategorySlugSchema>
-) {
+export async function getAllByCategorySlug(slug: string) {
   let categorySlugs: string[] = [];
-  if (query?.categorySlug !== null) {
-    categorySlugs.push(query?.categorySlug);
+  if (slug !== null) {
+    categorySlugs.push(slug);
   }
 
   const allRecipes = await prisma.recipe.findMany({
