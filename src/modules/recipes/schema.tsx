@@ -1,4 +1,3 @@
-// import { z } from "zod";
 import { z } from "@hono/zod-openapi";
 import { ingredients } from "../../../prisma/data/ingredients";
 
@@ -7,7 +6,7 @@ export const QueryRecipeSchema = z.object({
 });
 
 export const RecipeByCategorySlugSchema = z.object({
-  categorySlug: z.string(),
+  slug: z.string(),
 });
 
 export const RecipeByUsernameSchema = z.object({
