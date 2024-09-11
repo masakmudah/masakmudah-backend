@@ -58,22 +58,21 @@ recipesRoute.openapi(
 recipesRoute.openapi(
   {
     method: "get",
-    path: "/category/{categorySlug}",
-    description: "Get all recipes by categoryId",
+    path: "/category/{slug}",
+    description: "Get all recipes by category slug",
     request: {
-      query: RecipeByCategorySlugSchema,
+      params: RecipeByCategorySlugSchema,
     },
     responses: {
       200: {
-        description: "List of recipes by categoryId",
+        description: "List of recipes by category slug",
       },
     },
     tags: API_TAG,
   },
   async (c) => {
-    const data = await recipeService.getAllByCategorySlug(
-      c.req.query() as z.infer<typeof RecipeByCategorySlugSchema>
-    );
+    const slug = c.req.param("slug")!;
+    const data = await recipeService.getAllByCategorySlug(slug);
 
     return c.json({
       message: "Success",
