@@ -55,8 +55,8 @@ categoriesRoute.openapi(
 categoriesRoute.openapi(
   {
     method: "get",
-    path: "/{categorySlug}",
-    description: "Get detail category by categorySlug ",
+    path: "/{slug}",
+    description: "Get detail category by slug ",
     request: {
       params: CategorySlugSchema,
     },
@@ -71,7 +71,7 @@ categoriesRoute.openapi(
     tags: API_TAG,
   },
   async (c) => {
-    const categoryParam = c.req.param("category")!;
+    const categoryParam = c.req.param("slug")!;
     const data = await categoryService.getCategory(categoryParam);
 
     if (!data) {

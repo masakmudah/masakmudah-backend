@@ -14,7 +14,7 @@ export const CategorySchema = z.object({
 });
 
 export const CategorySlugSchema = z.object({
-  categorySlug: z.string().min(1),
+  slug: z.string().min(1),
 });
 
 export const CategoryByIdSchema = z.object({

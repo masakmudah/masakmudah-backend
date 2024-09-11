@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { CategorySchema, QueryCategorySchema } from "./schema";
 import { prisma } from "../../lib/prisma";
-import { OpenAPIHono } from "@hono/zod-openapi";
 
 export async function getAll(q: z.infer<typeof QueryCategorySchema>) {
   if (JSON.stringify(q) === "{}") {
@@ -9,6 +8,7 @@ export async function getAll(q: z.infer<typeof QueryCategorySchema>) {
       select: {
         id: true,
         name: true,
+        slug: true,
         createdAt: true,
         updatedAt: true,
         recipes: true,
@@ -20,6 +20,7 @@ export async function getAll(q: z.infer<typeof QueryCategorySchema>) {
     select: {
       id: true,
       name: true,
+      slug: true,
       createdAt: true,
       updatedAt: true,
       recipes: true,
@@ -46,6 +47,7 @@ export async function getCategory(categorySlug: string) {
     select: {
       id: true,
       name: true,
+      slug: true,
       createdAt: true,
       updatedAt: true,
       recipes: true,
