@@ -43,12 +43,13 @@ model Ingredient {
 model IngredientItem {
   id String @id @default(cuid())
 
+  sequence Int @default(0)
+
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
   ingredientId String
 
   quantity    Int
   measurement String
-  sequence    Int    @default(0)
 
   recipes Recipe[]
 }

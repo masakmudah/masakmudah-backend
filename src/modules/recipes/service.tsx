@@ -47,12 +47,15 @@ export async function getAll(query: z.infer<typeof QueryRecipeSchema>) {
         },
       ],
     },
-    orderBy: {
-      name: "asc",
-    },
+    // orderBy: {
+    //   name: "asc",
+    // },
   });
 
-  return allRecipes;
+  const showRandomRecipes = allRecipes.sort(() => Math.random() - 0.5);
+  return showRandomRecipes;
+
+  // return allRecipes;
 }
 
 export async function getAllByCategorySlug(
@@ -140,9 +143,14 @@ export async function getAllByUsername(usernameParam: string) {
         username: usernameParam,
       },
     },
-    orderBy: {
-      name: "asc",
-    },
+    orderBy: [
+      {
+        updatedAt: "desc",
+      },
+      {
+        name: "asc",
+      },
+    ],
   });
 
   return allRecipes;
@@ -163,6 +171,9 @@ export async function get(slugParam: string) {
       ingredientItems: {
         include: {
           ingredient: true,
+        },
+        orderBy: {
+          sequence: "asc",
         },
       },
       instructions: true,
@@ -247,6 +258,9 @@ export const create = async (body: z.infer<typeof CreateRecipeSchema>) => {
         ingredientItems: {
           include: {
             ingredient: true,
+          },
+          orderBy: {
+            sequence: "asc",
           },
         },
         instructions: true,
