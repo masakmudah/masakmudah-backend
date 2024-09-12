@@ -137,6 +137,7 @@ authRoute.openapi(
         description: true,
         createdAt: true,
         updatedAt: true,
+        savedRecipes: true,
       },
     });
 

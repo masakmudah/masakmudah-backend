@@ -8,34 +8,34 @@ export async function getAll(usernameParam: string) {
       id: true,
       userId: true,
       recipeId: true,
-      createdAt: true,
-      updatedAt: true,
+      // createdAt: true,
+      // updatedAt: true,
       recipes: {
         select: {
-          id: true,
+          // id: true,
           name: true,
           slug: true,
-          description: true,
+          // description: true,
           imageURL: true,
           cookingTime: true,
-          ingredientItems: {
-            include: {
-              ingredient: true,
-            },
-          },
-          instructions: true,
-          categories: true,
-          user: {
-            select: {
-              id: true,
-              username: true,
-              fullname: true,
-              email: true,
-              imageURL: true,
-            },
-          },
-          createdAt: true,
-          updatedAt: true,
+          // ingredientItems: {
+          //   include: {
+          //     ingredient: true,
+          //   },
+          // },
+          // instructions: true,
+          // categories: true,
+          // user: {
+          //   select: {
+          //     id: true,
+          //     username: true,
+          //     fullname: true,
+          //     email: true,
+          //     imageURL: true,
+          //   },
+          // },
+          // createdAt: true,
+          // updatedAt: true,
         },
       },
     },
