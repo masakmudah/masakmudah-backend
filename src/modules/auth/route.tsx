@@ -137,7 +137,17 @@ authRoute.openapi(
         description: true,
         createdAt: true,
         updatedAt: true,
-        savedRecipes: true,
+        // savedRecipes: {
+        //   select: {
+        //     recipes: {
+        //       select: {
+        //         name: true,
+        //         imageURL: true,
+        //         slug: true,
+        //       },
+        //     },
+        //   },
+        // },
       },
     });
 
